@@ -1,0 +1,25 @@
+{
+  "name": "asl-notifications",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UKHomeOffice/asl-notifications.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UKHomeOffice/asl-notifications/issues"
+  },
+  "homepage": "https://github.com/UKHomeOffice/asl-notifications#readme",
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-config-lennym": "^2.0.1",
+    "eslint-plugin-undocumented-env": "^1.0.0"
+  }
+}
