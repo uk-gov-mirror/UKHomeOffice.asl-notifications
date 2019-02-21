@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/UKHomeOffice/asl-notifications/issues"
   },
-  "homepage": "https://github.com/UKHomeOffice/asl-notifications#readme"
+  "homepage": "https://github.com/UKHomeOffice/asl-notifications#readme",
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-config-lennym": "^2.0.1",
+    "eslint-plugin-undocumented-env": "^1.0.0"
+  }
 }
