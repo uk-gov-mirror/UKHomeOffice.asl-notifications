@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "eslint ."
+    "test": "eslint .",
+    "dev": "nodemon -r dotenv/config index.js"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,10 @@
   },
   "homepage": "https://github.com/UKHomeOffice/asl-notifications#readme",
   "devDependencies": {
+    "dotenv": "^6.2.0",
     "eslint": "^5.14.1",
     "eslint-config-lennym": "^2.0.1",
-    "eslint-plugin-undocumented-env": "^1.0.0"
+    "eslint-plugin-undocumented-env": "^1.0.0",
+    "nodemon": "^1.18.10"
   }
 }
