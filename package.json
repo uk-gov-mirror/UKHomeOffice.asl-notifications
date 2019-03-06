@@ -24,5 +24,10 @@
     "eslint-config-lennym": "^2.0.1",
     "eslint-plugin-undocumented-env": "^1.0.0",
     "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "r2": "^2.0.1"
   }
 }
