@@ -26,6 +26,7 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
+    "@asl/schema": "^7.10.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "r2": "^2.0.1"
