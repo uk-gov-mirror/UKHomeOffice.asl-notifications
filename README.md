@@ -10,6 +10,7 @@ DATABASE_NAME=asl
 DATABASE_HOST=localhost
 DATABASE_USERNAME=postgres
 EMAILER_SERVICE=http://localhost:8084
+PUBLIC_UI=http://localhost:8080
 ```
 
 Then `npm run dev`.
