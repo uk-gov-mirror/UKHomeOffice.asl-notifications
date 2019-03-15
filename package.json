@@ -27,8 +27,8 @@
   },
   "dependencies": {
     "@asl/schema": "^7.10.0",
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4",
+    "@asl/service": "^7.1.0",
+    "lodash": "^4.17.11",
     "r2": "^2.0.1"
   }
 }

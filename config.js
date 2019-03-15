@@ -5,7 +5,30 @@ module.exports = {
     host: process.env.DATABASE_HOST || 'localhost',
     user: process.env.DATABASE_USERNAME || 'postgres'
   },
-  emailer: {
-    host: process.env.EMAILER_SERVICE
+  emailer: process.env.EMAILER_SERVICE,
+  publicUrl: process.env.PUBLIC_UI,
+  notifications: {
+    applicant: {
+      status: [
+        'with-licensing',
+        'with-inspectorate',
+        'referred-to-inspector',
+        'inspector-recommended',
+        'inspector-rejected',
+        'resolved',
+        'rejected',
+        'returned-to-applicant',
+        'with-ntco',
+        'withdrawn-by-applicant'
+      ],
+      action: [
+        'returned-to-applicant'
+      ]
+    },
+    ntco: {
+      action: [
+        'with-ntco'
+      ]
+    }
   }
 };
