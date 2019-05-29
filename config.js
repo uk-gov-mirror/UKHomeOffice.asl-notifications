@@ -3,7 +3,9 @@ module.exports = {
   db: {
     database: process.env.DATABASE_NAME || 'asl',
     host: process.env.DATABASE_HOST || 'localhost',
-    user: process.env.DATABASE_USERNAME || 'postgres'
+    user: process.env.DATABASE_USERNAME || 'postgres',
+    password: process.env.DATABASE_PASSWORD,
+    port: process.env.DATABASE_PORT
   },
   emailer: process.env.EMAILER_SERVICE,
   publicUrl: process.env.PUBLIC_UI,
