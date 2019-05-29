@@ -14,3 +14,8 @@ PUBLIC_UI=http://localhost:8080
 ```
 
 Then `npm run dev`.
+
+## Additional config
+
+* `DATABASE_PASSWORD`
+* `DATABASE_PORT`
