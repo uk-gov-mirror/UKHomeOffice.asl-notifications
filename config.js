@@ -20,7 +20,7 @@ module.exports = {
         'resolved',
         'rejected',
         'returned-to-applicant',
-        'with-ntco',
+        'awaiting-endorsement',
         'withdrawn-by-applicant'
       ],
       action: [
@@ -29,7 +29,6 @@ module.exports = {
     },
     ntco: {
       action: [
-        'with-ntco',
         'awaiting-endorsement'
       ]
     }
