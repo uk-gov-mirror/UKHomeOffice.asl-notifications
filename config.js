@@ -29,7 +29,8 @@ module.exports = {
     },
     ntco: {
       action: [
-        'with-ntco'
+        'with-ntco',
+        'awaiting-endorsement'
       ]
     }
   }
