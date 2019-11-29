@@ -29,12 +29,14 @@ module.exports = {
     },
     ntco: {
       action: [
-        'awaiting-endorsement'
+        'awaiting-endorsement',
+        'resolved'
       ]
     },
     outgoingNtco: {
       status: [
-        'awaiting-endorsement'
+        'awaiting-endorsement',
+        'resolved'
       ]
     }
   }
