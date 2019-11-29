@@ -31,6 +31,11 @@ module.exports = {
       action: [
         'awaiting-endorsement'
       ]
+    },
+    outgoingNtco: {
+      status: [
+        'awaiting-endorsement'
+      ]
     }
   }
 };
