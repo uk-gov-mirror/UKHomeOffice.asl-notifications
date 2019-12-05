@@ -34,7 +34,7 @@ module.exports = {
       ]
     },
     outgoingNtco: {
-      status: [
+      outgoing: [
         'awaiting-endorsement',
         'resolved'
       ]
