@@ -1,10 +1,18 @@
 const knex = require('knex');
 const Schema = require('@asl/schema');
-const dbConfig = require('../../knexfile');
 const fixtures = require('../data');
 
-const db = knex(dbConfig.test);
-const schema = Schema(dbConfig.test.connection);
+const dbConfig = {
+  client: 'postgres',
+  connection: {
+    database: process.env.DATABASE_NAME || 'asl-test',
+    host: process.env.DATABASE_HOST || 'localhost',
+    user: process.env.DATABASE_USERNAME || 'postgres'
+  }
+};
+
+const db = knex(dbConfig);
+const schema = Schema(dbConfig.connection);
 
 module.exports = {
   reset: () => {
