@@ -5,7 +5,7 @@ const dbConfig = require('../knexfile');
 const migrate = () => {
   return Promise.resolve()
     .then(() => {
-      console.log('migrate asl test db');
+      console.log(`migrate ${dbConfig.test.connection.database} db`);
       process.chdir('./node_modules/@asl/schema');
       return knex(dbConfig.test).migrate.latest();
     });
