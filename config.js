@@ -1,4 +1,5 @@
 module.exports = {
+  logLevel: process.env.LOG_LEVEL || 'info',
   port: process.env.PORT || 8080,
   db: {
     database: process.env.DATABASE_NAME || 'asl',
@@ -7,37 +8,8 @@ module.exports = {
     password: process.env.DATABASE_PASSWORD,
     port: process.env.DATABASE_PORT
   },
-  emailer: process.env.EMAILER_SERVICE,
-  publicUrl: process.env.PUBLIC_UI,
-  notifications: {
-    applicant: {
-      status: [
-        'with-licensing',
-        'with-inspectorate',
-        'referred-to-inspector',
-        'inspector-recommended',
-        'inspector-rejected',
-        'resolved',
-        'rejected',
-        'returned-to-applicant',
-        'awaiting-endorsement',
-        'withdrawn-by-applicant'
-      ],
-      action: [
-        'returned-to-applicant'
-      ]
-    },
-    ntco: {
-      action: [
-        'awaiting-endorsement',
-        'resolved'
-      ]
-    },
-    outgoingNtco: {
-      outgoing: [
-        'awaiting-endorsement',
-        'resolved'
-      ]
-    }
-  }
+  emailer: {
+    host: process.env.EMAILER_SERVICE
+  },
+  publicUrl: process.env.PUBLIC_UI
 };

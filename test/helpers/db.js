@@ -11,11 +11,12 @@ const dbConfig = {
   }
 };
 
-const db = knex(dbConfig);
-const schema = Schema(dbConfig.connection);
-
 module.exports = {
+  init: () => Schema(dbConfig.connection),
+
   reset: () => {
+    const db = knex(dbConfig);
+
     return Promise.resolve()
       .then(() => {
         // get the names of all tables in the db
@@ -35,11 +36,8 @@ module.exports = {
         }, Promise.resolve());
       });
   },
-  loadFixtures: () => {
-    return Promise.resolve()
-      .then(() => fixtures.default(schema));
-  },
-  destroy: () => {
-    return schema.destroy();
+
+  loadFixtures: schema => {
+    return fixtures.default(schema);
   }
 };
