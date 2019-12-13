@@ -8,7 +8,8 @@ const {
   projectApplicationSubmitted,
   projectApplicationEndorsed,
   projectApplicationApproved,
-  projectApplicationGranted
+  projectApplicationGranted,
+  projectApplicationRejected
 } = require('../../../data/tasks');
 
 describe('Project applications', () => {
@@ -27,7 +28,7 @@ describe('Project applications', () => {
     return this.schema.destroy();
   });
 
-  describe('applicant', () => {
+  describe('Applicant', () => {
 
     it('notifies the applicant when a new application is submitted', () => {
       return this.recipientBuilder.getRecipientList(projectApplicationSubmitted)
@@ -60,9 +61,17 @@ describe('Project applications', () => {
         });
     });
 
+    it('notifies the applicant when the application is rejected', () => {
+      return this.recipientBuilder.getRecipientList(projectApplicationRejected)
+        .then(recipients => {
+          assert(recipients.has(basic), 'basic user is in the recipients list');
+          assert(recipients.get(basic).email === 'task-closed', 'email type is task-closed');
+        });
+    });
+
   });
 
-  describe('admins', () => {
+  describe('Establishment admins', () => {
 
     it('notifies all admins at the establishment when a new application is submitted', () => {
       return this.recipientBuilder.getRecipientList(projectApplicationSubmitted)
@@ -92,6 +101,16 @@ describe('Project applications', () => {
 
     it('notifies all admins at the establishment when the application is granted', () => {
       return this.recipientBuilder.getRecipientList(projectApplicationGranted)
+        .then(recipients => {
+          assert(recipients.has(holc), 'holc is in the recipients list');
+          assert(recipients.get(holc).email === 'task-closed', 'email type is task-closed');
+          assert(recipients.has(croydonAdmin), 'croydonAdmin is in the recipients list');
+          assert(recipients.get(croydonAdmin).email === 'task-closed', 'email type is task-closed');
+        });
+    });
+
+    it('notifies all admins at the establishment when the application is rejected', () => {
+      return this.recipientBuilder.getRecipientList(projectApplicationRejected)
         .then(recipients => {
           assert(recipients.has(holc), 'holc is in the recipients list');
           assert(recipients.get(holc).email === 'task-closed', 'email type is task-closed');
