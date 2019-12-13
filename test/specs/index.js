@@ -23,7 +23,7 @@ describe('Notification list', () => {
   it('returns empty if the task status is an ignored status', () => {
     const task = { status: 'resubmitted', model: 'establishment' };
 
-    return this.recipientBuilder.getRecipientList(task)
+    return this.recipientBuilder.getNotifications(task)
       .then(recipients => {
         assert(isEmpty(recipients), 'do not notify users of ignored task statuses');
       });
@@ -32,7 +32,7 @@ describe('Notification list', () => {
   it('returns empty if there is no model present in the task', () => {
     const task = { status: 'not-a-valid-task', model: null };
 
-    return this.recipientBuilder.getRecipientList(task)
+    return this.recipientBuilder.getNotifications(task)
       .then(recipients => {
         assert(isEmpty(recipients), 'do not notify users if we can\'t determine the model');
       });

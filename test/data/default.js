@@ -38,7 +38,7 @@ module.exports = models => {
           firstName: 'Croydon',
           lastName: 'Admin',
           dob: '1972-07-11',
-          email: 'vice-chancellor2@example.com',
+          email: 'croydon.admin@example.com',
           establishments: [
             {
               id: 8201,
