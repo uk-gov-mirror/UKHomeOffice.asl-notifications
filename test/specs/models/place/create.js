@@ -75,7 +75,7 @@ describe('Place create (Establishment amendment)', () => {
         });
     });
 
-    it('notifies other admins at the establishment when the application lands with ASRU', () => {
+    it('notifies other admins at the establishment when the amendment lands with ASRU', () => {
       return this.recipientBuilder.getNotifications(pelAmendmentSubmitted)
         .then(recipients => {
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
