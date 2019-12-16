@@ -5,6 +5,11 @@ module.exports = {
   pelApplicationGranted: require('./establishment/pel-application-granted'),
   pelApplicationRejected: require('./establishment/pel-application-rejected'),
 
+  pelAmendmentSubmitted: require('./place/pel-amendment-submitted'),
+  pelAmendmentApproved: require('./place/pel-amendment-approved'),
+  pelAmendmentGranted: require('./place/pel-amendment-granted'),
+  pelAmendmentRejected: require('./place/pel-amendment-rejected'),
+
   // PIL tasks
   pilApplicationSubmitted: require('./pil/pil-application-submitted'),
   pilApplicationEndorsed: require('./pil/pil-application-endorsed'),
