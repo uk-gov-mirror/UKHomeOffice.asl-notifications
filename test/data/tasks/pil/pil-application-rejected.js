@@ -4,14 +4,13 @@ module.exports = {
     previous: 'inspector-recommended',
     next: 'rejected',
     user: {
-      id: 'f4c6fe14-15b4-403b-89e6-7e31913284c1',
+      id: 'dee8605d-2113-4411-8a0a-dc131af87a76',
       profile: {
-        id: '304235c0-1a83-49f0-87ca-b11b1ad1e147',
-        title: 'Mr',
-        firstName: 'Basic',
-        lastName: 'User',
-        email: 'basic.user@example.com',
-        name: 'Basic User'
+        id: '2c6bab00-dffb-4f4d-ad3d-7a107ca42f28',
+        title: 'Miss',
+        firstName: 'Li Sen',
+        lastName: 'Xing',
+        email: 'asru-licensing@homeoffice.gov.uk'
       }
     },
     payload: {

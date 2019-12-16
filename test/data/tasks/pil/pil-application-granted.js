@@ -1,29 +1,27 @@
 module.exports = {
   id: 'be208b75-d74c-4e1c-b211-c42666e10f55',
   meta: {
-    previous: 'endorsed',
-    next: 'with-licensing',
+    previous: 'inspector-recommended',
+    next: 'resolved',
     user: {
-      id: 'f4c6fe14-15b4-403b-89e6-7e31913284c1',
+      id: 'dee8605d-2113-4411-8a0a-dc131af87a76',
       profile: {
-        id: '304235c0-1a83-49f0-87ca-b11b1ad1e147',
-        title: 'Mr',
-        firstName: 'Basic',
-        lastName: 'User',
-        email: 'basic.user@example.com',
-        name: 'Basic User'
+        id: '2c6bab00-dffb-4f4d-ad3d-7a107ca42f28',
+        title: 'Miss',
+        firstName: 'Li Sen',
+        lastName: 'Xing',
+        email: 'asru-licensing@homeoffice.gov.uk'
       }
     },
-    payload:
-    {
-      status: 'endorsed',
-      meta: { comment: 'Endorsed' },
-      changedBy: '0b2d1c52-f8e4-4d16-b58c-0ce80ca58d0c'
+    payload: {
+      status: 'resolved',
+      meta: { comment: 'Granted' },
+      changedBy: 'e1dfc216-e535-4e28-acca-a8251a1fd3b0'
     }
   },
-  event: 'status:endorsed:with-licensing',
-  comment: 'Endorsed',
-  status: 'with-licensing',
+  event: 'status:inspector-recommended:resolved',
+  comment: 'Granted',
+  status: 'resolved',
   data: {
     id: '2169e6ae-db90-45da-b199-98ef3a82e52d',
     data: {

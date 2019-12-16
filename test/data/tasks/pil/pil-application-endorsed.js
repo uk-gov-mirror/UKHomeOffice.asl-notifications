@@ -1,28 +1,27 @@
 module.exports = {
   id: 'be208b75-d74c-4e1c-b211-c42666e10f55',
   meta: {
-    previous: 'inspector-recommended',
-    next: 'resolved',
+    previous: 'endorsed',
+    next: 'with-licensing',
     user: {
-      id: 'f4c6fe14-15b4-403b-89e6-7e31913284c1',
+      id: '0b2d1c52-f8e4-4d16-b58c-0ce80ca58d0c',
       profile: {
-        id: '304235c0-1a83-49f0-87ca-b11b1ad1e147',
-        title: 'Mr',
-        firstName: 'Basic',
-        lastName: 'User',
-        email: 'basic.user@example.com',
-        name: 'Basic User'
+        id: 'd5f9d6b7-ad6b-4616-9e55-2fa92bfd9926',
+        title: 'Dr',
+        firstName: 'Neil',
+        lastName: 'Down',
+        email: 'ntco@example.com'
       }
     },
     payload: {
-      status: 'resolved',
-      meta: { comment: 'Granted' },
-      changedBy: 'e1dfc216-e535-4e28-acca-a8251a1fd3b0'
+      status: 'endorsed',
+      meta: { comment: 'Endorsed' },
+      changedBy: '0b2d1c52-f8e4-4d16-b58c-0ce80ca58d0c'
     }
   },
-  event: 'status:inspector-recommended:resolved',
-  comment: 'Granted',
-  status: 'resolved',
+  event: 'status:endorsed:with-licensing',
+  comment: 'Endorsed',
+  status: 'with-licensing',
   data: {
     id: '2169e6ae-db90-45da-b199-98ef3a82e52d',
     data: {

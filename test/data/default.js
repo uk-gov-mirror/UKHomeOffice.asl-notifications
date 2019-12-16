@@ -30,6 +30,16 @@ module.exports = models => {
               id: 8201,
               role: 'admin'
             }
+          ],
+          roles: [
+            {
+              establishmentId: 8201,
+              type: 'holc'
+            },
+            {
+              establishmentId: 8201,
+              type: 'pelh'
+            }
           ]
         },
         {
@@ -57,6 +67,74 @@ module.exports = models => {
             {
               id: 8201,
               role: 'basic'
+            },
+            {
+              id: 8202,
+              role: 'basic'
+            }
+          ]
+        },
+        {
+          id: '0b2d1c52-f8e4-4d16-b58c-0ce80ca58d0c',
+          title: 'Dr',
+          firstName: 'Neil',
+          lastName: 'Down',
+          dob: '1962-07-19',
+          email: 'ntco@example.com',
+          establishments: [
+            {
+              id: 8201,
+              role: 'basic'
+            }
+          ],
+          roles: [
+            {
+              establishmentId: 8201,
+              type: 'ntco'
+            }
+          ]
+        },
+        {
+          id: '133a1e2b-65d2-4b49-a372-d2e7bd5c50ea',
+          title: 'Dr',
+          firstName: 'Jason',
+          lastName: 'Alden',
+          dob: '1981-11-02',
+          email: 'ntco-marvell@example.com',
+          establishments: [
+            {
+              id: 8202,
+              role: 'basic'
+            }
+          ],
+          roles: [
+            {
+              establishmentId: 8202,
+              type: 'ntco'
+            }
+          ]
+        },
+        {
+          id: '45468f63-56e5-46d2-9306-eebc3b2c20d9',
+          title: 'Prof',
+          firstName: 'Arv',
+          lastName: 'Petrillo',
+          dob: '1976-09-21',
+          email: 'admin-marvell@example.com',
+          establishments: [
+            {
+              id: 8202,
+              role: 'admin'
+            }
+          ],
+          roles: [
+            {
+              establishmentId: 8202,
+              type: 'holc'
+            },
+            {
+              establishmentId: 8202,
+              type: 'pelh'
             }
           ]
         }
