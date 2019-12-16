@@ -13,6 +13,11 @@ module.exports = models => {
           id: 8202,
           name: 'Marvell Pharmaceutical',
           status: 'active'
+        },
+        {
+          id: 101,
+          name: 'Research 101',
+          status: 'inactive'
         }
       ]);
     })
@@ -135,6 +140,46 @@ module.exports = models => {
             {
               establishmentId: 8202,
               type: 'pelh'
+            }
+          ]
+        },
+        {
+          id: 'bc499bae-30ca-400c-9494-868d23dc301f',
+          title: 'Dr',
+          firstName: 'Lonni',
+          lastName: 'Dorracott',
+          dob: '1976-07-15',
+          email: 'admin-research101@example.com',
+          establishments: [
+            {
+              id: 101,
+              role: 'admin'
+            }
+          ],
+          roles: [
+            {
+              establishmentId: 101,
+              type: 'pelh'
+            }
+          ]
+        },
+        {
+          id: 'e7b205cf-1acf-4eb3-bcde-ab63c21d0551',
+          title: 'Prof',
+          firstName: 'Darb',
+          lastName: 'Stell',
+          dob: '1973-11-01',
+          email: 'admin2-research101@example.com',
+          establishments: [
+            {
+              id: 101,
+              role: 'admin'
+            }
+          ],
+          roles: [
+            {
+              establishmentId: 101,
+              type: 'holc'
             }
           ]
         }
