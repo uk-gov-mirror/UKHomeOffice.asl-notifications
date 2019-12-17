@@ -28,5 +28,12 @@ module.exports = {
   projectApplicationEndorsed: require('./project/project-application-endorsed'),
   projectApplicationApproved: require('./project/project-application-approved'),
   projectApplicationGranted: require('./project/project-application-granted'),
-  projectApplicationRejected: require('./project/project-application-rejected')
+  projectApplicationRejected: require('./project/project-application-rejected'),
+
+  // Profile tasks
+  profileAmendmentAutoresolved: require('./profile/profile-amendment-autoresolved'),
+  profileAmendmentSubmitted: require('./profile/profile-amendment-submitted'),
+  profileAmendmentApproved: require('./profile/profile-amendment-approved'),
+  profileAmendmentGranted: require('./profile/profile-amendment-granted'),
+  profileAmendmentRejected: require('./profile/profile-amendment-rejected')
 };
