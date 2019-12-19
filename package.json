@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "eslint .",
-    "dev": "nodemon -r dotenv/config index.js"
+    "dev": "nodemon -r dotenv/config index.js",
+    "test": "npm run test:lint && npm run test:unit",
+    "test:lint": "eslint .",
+    "pretest:unit": "npm run migrate",
+    "test:unit": "NODE_ENV=test mocha ./test --recursive --exit",
+    "migrate": "DATABASE_NAME=asl-test knex migrate:latest --knexfile ./node_modules/@asl/schema/knexfile.js"
   },
   "repository": {
     "type": "git",
@@ -23,12 +27,16 @@
     "eslint": "^5.16.0",
     "eslint-config-lennym": "^2.0.1",
     "eslint-plugin-undocumented-env": "^1.0.0",
+    "knex": "^0.20.3",
+    "mocha": "^6.2.2",
     "nodemon": "^1.18.10"
   },
   "dependencies": {
-    "@asl/schema": "^7.13.2",
+    "@asl/schema": "^7.24.3",
     "@asl/service": "^7.13.0",
     "lodash": "^4.17.15",
-    "r2": "^2.0.1"
+    "mustache": "^3.1.0",
+    "r2": "^2.0.1",
+    "winston": "^3.2.1"
   }
 }

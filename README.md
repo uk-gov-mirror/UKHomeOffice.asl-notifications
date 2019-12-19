@@ -5,6 +5,7 @@
 For default development config using `asl-conductor` create the following `.env` file:
 
 ```
+LOG_LEVEL=info
 PORT=8087
 DATABASE_NAME=asl
 DATABASE_HOST=localhost
