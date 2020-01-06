@@ -20,8 +20,35 @@ describe('Notification list', () => {
     return this.schema.destroy();
   });
 
+  it('returns empty if the event is a comment', () => {
+    const task = { event: 'comment', status: 'with-inspectorate', model: 'project', action: 'grant' };
+
+    return this.recipientBuilder.getNotifications(task)
+      .then(recipients => {
+        assert(isEmpty(recipients), 'do not notify users of comments');
+      });
+  });
+
+  it('returns empty if the event is a comment edit', () => {
+    const task = { event: 'edit-comment', status: 'with-inspectorate', model: 'project', action: 'grant' };
+
+    return this.recipientBuilder.getNotifications(task)
+      .then(recipients => {
+        assert(isEmpty(recipients), 'do not notify users of comments');
+      });
+  });
+
+  it('returns empty if the event is a comment deletion', () => {
+    const task = { event: 'delete-comment', status: 'with-inspectorate', model: 'project', action: 'grant' };
+
+    return this.recipientBuilder.getNotifications(task)
+      .then(recipients => {
+        assert(isEmpty(recipients), 'do not notify users of comments');
+      });
+  });
+
   it('returns empty if the task status is an ignored status', () => {
-    const task = { status: 'resubmitted', model: 'establishment' };
+    const task = { event: 'status:returned-to-applicant:resubmitted', status: 'resubmitted', model: 'establishment' };
 
     return this.recipientBuilder.getNotifications(task)
       .then(recipients => {
@@ -30,7 +57,7 @@ describe('Notification list', () => {
   });
 
   it('returns empty if there is no model present in the task', () => {
-    const task = { status: 'not-a-valid-task', model: null };
+    const task = { event: 'status:returned-to-applicant:resubmitted', status: 'not-a-valid-task', model: null };
 
     return this.recipientBuilder.getNotifications(task)
       .then(recipients => {
