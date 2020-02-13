@@ -34,7 +34,8 @@ module.exports = {
         return aslTables.reduce((p, table) => {
           return p.then(() => db.raw(`TRUNCATE TABLE ${table} CASCADE`));
         }, Promise.resolve());
-      });
+      })
+      .then(() => db.destroy());
   },
 
   loadFixtures: schema => {
