@@ -2,7 +2,7 @@ const assert = require('assert');
 const dbHelper = require('../../../helpers/db');
 const logger = require('../../../helpers/logger');
 const Recipients = require('../../../../lib/recipients');
-const { basic, croydonAdmin1, croydonAdmin2, croydonNtco } = require('../../../helpers/users');
+const { basic, croydonAdmin1, croydonAdmin2, croydonNtco, marvellAdmin } = require('../../../helpers/users');
 
 const {
   pilApplicationSubmitted,
@@ -171,6 +171,46 @@ describe('PIL applications', () => {
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
           assert(recipients.get(croydonAdmin2).emailTemplate === 'task-closed', 'email type is task-closed');
           assert(recipients.get(croydonAdmin2).applicant.id === basic, 'basic user is the applicant');
+        });
+    });
+
+  });
+
+  describe('Non-owning establishment admins', () => {
+
+    it('does not notify non-owning establishment admins when a new application is submitted', () => {
+      return this.recipientBuilder.getNotifications(pilApplicationSubmitted)
+        .then(recipients => {
+          assert(!recipients.has(marvellAdmin), 'marvellAdmin is not in the recipients list');
+        });
+    });
+
+    it('does not notify non-owning establishment admins when an application lands with ASRU', () => {
+      return this.recipientBuilder.getNotifications(pilApplicationEndorsed)
+        .then(recipients => {
+          assert(!recipients.has(marvellAdmin), 'marvellAdmin is not in the recipients list');
+        });
+    });
+
+    it('does not notify non-owning establishment admins when moving between inspectors and licensing', () => {
+      return this.recipientBuilder.getNotifications(pilApplicationApproved)
+        .then(recipients => {
+          assert(!recipients.has(marvellAdmin), 'marvellAdmin is not in the recipients list');
+        });
+    });
+
+    it('does not notify non-owning establishment admins when the application is rejected', () => {
+      return this.recipientBuilder.getNotifications(pilApplicationRejected)
+        .then(recipients => {
+          assert(!recipients.has(marvellAdmin), 'marvellAdmin is not in the recipients list');
+        });
+    });
+
+    it('notifies non-owning establishment admins when the application is granted', () => {
+      return this.recipientBuilder.getNotifications(pilApplicationGranted)
+        .then(recipients => {
+          assert(recipients.has(marvellAdmin), 'marvellAdmin is in the recipients list');
+          assert(recipients.get(marvellAdmin).emailTemplate === 'task-closed', 'email type is task-closed');
         });
     });
 
