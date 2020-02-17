@@ -23,6 +23,8 @@ module.exports = {
   pilTransferGranted: require('./pil/pil-transfer-granted'),
   pilTransferRejected: require('./pil/pil-transfer-rejected'),
 
+  pilAmendmentAsru: require('./pil/pil-amendment-asru'),
+
   // Project tasks
   projectApplicationSubmitted: require('./project/project-application-submitted'),
   projectApplicationEndorsed: require('./project/project-application-endorsed'),
