@@ -59,7 +59,7 @@ describe('Project applications', () => {
       return this.recipientBuilder.getNotifications(projectApplicationGranted)
         .then(recipients => {
           assert(recipients.has(basic), 'basic user is in the recipients list');
-          assert(recipients.get(basic).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(basic).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(basic).applicant.id === basic, 'basic user is the applicant');
         });
     });
@@ -109,10 +109,10 @@ describe('Project applications', () => {
       return this.recipientBuilder.getNotifications(projectApplicationGranted)
         .then(recipients => {
           assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
-          assert(recipients.get(croydonAdmin1).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(croydonAdmin1).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(croydonAdmin1).applicant.id === basic, 'basic user is the applicant');
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
-          assert(recipients.get(croydonAdmin2).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(croydonAdmin2).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(croydonAdmin2).applicant.id === basic, 'basic user is the applicant');
         });
     });

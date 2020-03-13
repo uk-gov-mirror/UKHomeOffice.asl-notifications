@@ -49,7 +49,7 @@ describe('Place create (Establishment amendment)', () => {
       return this.recipientBuilder.getNotifications(pelAmendmentGranted)
         .then(recipients => {
           assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
-          assert(recipients.get(croydonAdmin1).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(croydonAdmin1).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(croydonAdmin1).applicant.id === croydonAdmin1, 'croydonAdmin1 is the applicant');
         });
     });
@@ -95,7 +95,7 @@ describe('Place create (Establishment amendment)', () => {
       return this.recipientBuilder.getNotifications(pelAmendmentGranted)
         .then(recipients => {
           assert(recipients.has(croydonAdmin2), 'research101Admin2 is in the recipients list');
-          assert(recipients.get(croydonAdmin2).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(croydonAdmin2).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(croydonAdmin2).applicant.id === croydonAdmin1, 'croydonAdmin1 is the applicant');
         });
     });

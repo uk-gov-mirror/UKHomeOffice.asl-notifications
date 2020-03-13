@@ -49,7 +49,7 @@ describe('PEL applications', () => {
       return this.recipientBuilder.getNotifications(pelApplicationGranted)
         .then(recipients => {
           assert(recipients.has(research101Admin), 'research101Admin is in the recipients list');
-          assert(recipients.get(research101Admin).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(research101Admin).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(research101Admin).applicant.id === research101Admin, 'research101Admin is the applicant');
         });
     });
@@ -95,7 +95,7 @@ describe('PEL applications', () => {
       return this.recipientBuilder.getNotifications(pelApplicationGranted)
         .then(recipients => {
           assert(recipients.has(research101Admin2), 'research101Admin2 is in the recipients list');
-          assert(recipients.get(research101Admin2).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(research101Admin2).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(research101Admin2).applicant.id === research101Admin, 'research101Admin is the applicant');
         });
     });
