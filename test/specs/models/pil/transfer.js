@@ -59,7 +59,7 @@ describe('PIL transfers', () => {
       return this.recipientBuilder.getNotifications(pilTransferGranted)
         .then(recipients => {
           assert(recipients.has(basic), 'basic user is in the recipients list');
-          assert(recipients.get(basic).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(basic).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(basic).applicant.id === basic, 'basic user is the applicant');
         });
     });
@@ -106,7 +106,7 @@ describe('PIL transfers', () => {
         return this.recipientBuilder.getNotifications(pilTransferGranted)
           .then(recipients => {
             assert(recipients.has(marvellNtco), 'marvellNtco is in the recipients list');
-            assert(recipients.get(marvellNtco).emailTemplate === 'task-closed', 'email type is task-closed');
+            assert(recipients.get(marvellNtco).emailTemplate === 'licence-granted', 'email type is licence-granted');
             assert(recipients.get(marvellNtco).applicant.id === basic, 'basic user is the applicant');
           });
       });
@@ -151,7 +151,7 @@ describe('PIL transfers', () => {
         return this.recipientBuilder.getNotifications(pilTransferGranted)
           .then(recipients => {
             assert(recipients.has(marvellAdmin), 'marvellAdmin is in the recipients list');
-            assert(recipients.get(marvellAdmin).emailTemplate === 'task-closed', 'email type is task-closed');
+            assert(recipients.get(marvellAdmin).emailTemplate === 'licence-granted', 'email type is licence-granted');
             assert(recipients.get(marvellAdmin).applicant.id === basic, 'basic user is the applicant');
           });
       });

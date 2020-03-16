@@ -59,7 +59,7 @@ describe('PIL applications', () => {
       return this.recipientBuilder.getNotifications(pilApplicationGranted)
         .then(recipients => {
           assert(recipients.has(basic), 'basic user is in the recipients list');
-          assert(recipients.get(basic).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(basic).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(basic).applicant.id === basic, 'basic user is the applicant');
         });
     });
@@ -104,7 +104,7 @@ describe('PIL applications', () => {
       return this.recipientBuilder.getNotifications(pilApplicationGranted)
         .then(recipients => {
           assert(recipients.has(croydonNtco), 'croydonNtco is in the recipients list');
-          assert(recipients.get(croydonNtco).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(croydonNtco).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(croydonNtco).applicant.id === basic, 'basic user is the applicant');
         });
     });
@@ -154,10 +154,10 @@ describe('PIL applications', () => {
       return this.recipientBuilder.getNotifications(pilApplicationGranted)
         .then(recipients => {
           assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
-          assert(recipients.get(croydonAdmin1).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(croydonAdmin1).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(croydonAdmin1).applicant.id === basic, 'basic user is the applicant');
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
-          assert(recipients.get(croydonAdmin2).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(croydonAdmin2).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(croydonAdmin2).applicant.id === basic, 'basic user is the applicant');
         });
     });
