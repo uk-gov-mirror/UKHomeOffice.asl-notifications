@@ -8,7 +8,7 @@
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint .",
     "pretest:unit": "npm run migrate",
-    "test:unit": "NODE_ENV=test mocha ./test --recursive --exit",
+    "test:unit": "NODE_ENV=test mocha ./test --recursive --exit --timeout 5000",
     "migrate": "DATABASE_NAME=asl-test knex migrate:latest --knexfile ./node_modules/@asl/schema/knexfile.js"
   },
   "repository": {
