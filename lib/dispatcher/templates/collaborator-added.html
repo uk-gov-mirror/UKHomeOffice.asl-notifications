@@ -1,0 +1,7 @@
+{{#isLicenceHolder}}
+  <p>A new collaborator has been added to the following project:</p>
+{{/isLicenceHolder}}
+{{^isLicenceHolder}}
+  <p>You have been given access to view the following project:<p>
+{{/isLicenceHolder}}
+<p><a href="{{licenceUrl}}">{{projectTitle}}</a></p>
