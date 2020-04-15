@@ -1,0 +1,10 @@
+{{#isLicenceHolder}}
+  <p>A colleague has been given access to view your project:</p>
+{{/isLicenceHolder}}
+{{^isLicenceHolder}}
+  <p>You have been given access to view the following project:<p>
+{{/isLicenceHolder}}
+<p><a href="{{licenceUrl}}">{{projectTitle}}</a></p>
+{{#isLicenceHolder}}
+  <p><a href="{{licenceUrl}}/add-user">Manage project access.</a></p>
+{{/isLicenceHolder}}
