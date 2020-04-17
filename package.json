@@ -7,7 +7,7 @@
     "dev": "nodemon -r dotenv/config index.js",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint .",
-    "pretest:unit": "npm run migrate",
+    "pretest:unit": "NODE_ENV=test npm run migrate",
     "test:unit": "NODE_ENV=test mocha ./test --recursive --exit --timeout 5000",
     "migrate": "DATABASE_NAME=asl-test knex migrate:latest --knexfile ./node_modules/@asl/schema/knexfile.js"
   },
@@ -32,7 +32,7 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
-    "@asl/schema": "^7.32.5",
+    "@asl/schema": "^7.40.2",
     "@asl/service": "^7.13.0",
     "lodash": "^4.17.15",
     "mustache": "^3.1.0",

@@ -8,7 +8,7 @@ const dbConfig = {
     database: process.env.DATABASE_NAME || 'asl-test',
     host: process.env.DATABASE_HOST || 'localhost',
     user: process.env.DATABASE_USERNAME || 'postgres',
-    password: process.env.DATABASE_PASSWORD
+    password: process.env.DATABASE_PASSWORD || 'test-password'
   }
 };
 

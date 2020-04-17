@@ -32,11 +32,10 @@ describe('Profile amendment', () => {
 
     describe('Applicant', () => {
 
-      it('notifies the profile owner that the change has been made', () => {
+      it('does not notify the profile owner that the change has been made', () => {
         return this.recipientBuilder.getNotifications(profileAmendmentAutoresolved)
           .then(recipients => {
-            assert(recipients.has(basic), 'basic is in the recipients list');
-            assert(recipients.get(basic).emailTemplate === 'profile-updated', 'email type is profile-updated');
+            assert(!recipients.has(basic), 'basic is not in the recipients list');
           });
       });
 
