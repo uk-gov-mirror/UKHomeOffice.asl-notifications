@@ -48,7 +48,7 @@ describe('Notification list', () => {
   });
 
   it('returns empty if the task status is an ignored status', () => {
-    const task = { event: 'status:returned-to-applicant:resubmitted', status: 'resubmitted', model: 'establishment' };
+    const task = { event: 'status:returned-to-applicant:resubmitted', status: 'with-inspectorate', model: 'establishment', meta: { previous: 'returned-to-applicant', next: 'resubmitted' } };
 
     return this.recipientBuilder.getNotifications(task)
       .then(recipients => {
@@ -57,7 +57,7 @@ describe('Notification list', () => {
   });
 
   it('returns empty if there is no model present in the task', () => {
-    const task = { event: 'status:returned-to-applicant:resubmitted', status: 'not-a-valid-task', model: null };
+    const task = { event: 'status:returned-to-applicant:resubmitted', status: 'not-a-valid-task', model: null, meta: { previous: 'returned-to-applicant', next: 'resubmitted' } };
 
     return this.recipientBuilder.getNotifications(task)
       .then(recipients => {
