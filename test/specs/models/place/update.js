@@ -1,4 +1,5 @@
 const assert = require('assert');
+const { merge } = require('lodash');
 const dbHelper = require('../../../helpers/db');
 const logger = require('../../../helpers/logger');
 const Recipients = require('../../../../lib/recipients');
@@ -11,7 +12,11 @@ const {
   pelAmendmentRejected
 } = require('../../../data/tasks');
 
-describe('Place create (Establishment amendment)', () => {
+const makeUpdate = task => {
+  return merge({}, task, { data: { action: 'update' } });
+};
+
+describe('Place update (Establishment amendment)', () => {
 
   before(() => {
     this.schema = dbHelper.init();
@@ -30,7 +35,7 @@ describe('Place create (Establishment amendment)', () => {
   describe('Applicant', () => {
 
     it('notifies the applicant when the amendment lands with ASRU', () => {
-      return this.recipientBuilder.getNotifications(pelAmendmentSubmitted)
+      return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentSubmitted))
         .then(recipients => {
           assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
           assert(recipients.get(croydonAdmin1).emailTemplate === 'task-with-asru', 'email type is task-with-asru');
@@ -39,14 +44,14 @@ describe('Place create (Establishment amendment)', () => {
     });
 
     it('does not notify the applicant when moving between inspectors and licensing', () => {
-      return this.recipientBuilder.getNotifications(pelAmendmentApproved)
+      return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentApproved))
         .then(recipients => {
           assert(!recipients.has(croydonAdmin1), 'croydonAdmin1 is not in the recipients list');
         });
     });
 
     it('notifies the applicant when the amendment is granted', () => {
-      return this.recipientBuilder.getNotifications(pelAmendmentGranted)
+      return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentGranted))
         .then(recipients => {
           assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
           assert(recipients.get(croydonAdmin1).emailTemplate === 'licence-amended', 'email type is licence-amended');
@@ -55,7 +60,7 @@ describe('Place create (Establishment amendment)', () => {
     });
 
     it('notifies the applicant when the amendment is rejected', () => {
-      return this.recipientBuilder.getNotifications(pelAmendmentRejected)
+      return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentRejected))
         .then(recipients => {
           assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
           assert(recipients.get(croydonAdmin1).emailTemplate === 'task-closed', 'email type is task-closed');
@@ -68,7 +73,7 @@ describe('Place create (Establishment amendment)', () => {
   describe('Establishment admins', () => {
 
     it('does not override the applicant email if the applicant is also an admin', () => {
-      return this.recipientBuilder.getNotifications(pelAmendmentSubmitted)
+      return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentSubmitted))
         .then(recipients => {
           assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
           assert(recipients.get(croydonAdmin1).emailTemplate === 'task-with-asru', 'email type is task-with-asru');
@@ -76,7 +81,7 @@ describe('Place create (Establishment amendment)', () => {
     });
 
     it('notifies other admins at the establishment when the amendment lands with ASRU', () => {
-      return this.recipientBuilder.getNotifications(pelAmendmentSubmitted)
+      return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentSubmitted))
         .then(recipients => {
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
           assert(recipients.get(croydonAdmin2).emailTemplate === 'task-with-asru', 'email type is task-with-asru');
@@ -85,14 +90,14 @@ describe('Place create (Establishment amendment)', () => {
     });
 
     it('does not notify other admins at the establishment when moving between inspectors and licensing', () => {
-      return this.recipientBuilder.getNotifications(pelAmendmentApproved)
+      return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentApproved))
         .then(recipients => {
           assert(!recipients.has(croydonAdmin2), 'croydonAdmin2 is not in the recipients list');
         });
     });
 
     it('notifies other admins at the establishment when the amendment is granted', () => {
-      return this.recipientBuilder.getNotifications(pelAmendmentGranted)
+      return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentGranted))
         .then(recipients => {
           assert(recipients.has(croydonAdmin2), 'research101Admin2 is in the recipients list');
           assert(recipients.get(croydonAdmin2).emailTemplate === 'licence-amended', 'email type is licence-amended');
@@ -101,7 +106,7 @@ describe('Place create (Establishment amendment)', () => {
     });
 
     it('notifies other admins at the establishment when the amendment is rejected', () => {
-      return this.recipientBuilder.getNotifications(pelAmendmentRejected)
+      return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentRejected))
         .then(recipients => {
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
           assert(recipients.get(croydonAdmin2).emailTemplate === 'task-closed', 'email type is task-closed');
