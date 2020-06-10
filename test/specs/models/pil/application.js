@@ -210,7 +210,7 @@ describe('PIL applications', () => {
       return this.recipientBuilder.getNotifications(pilApplicationGranted)
         .then(recipients => {
           assert(recipients.has(marvellAdmin), 'marvellAdmin is in the recipients list');
-          assert(recipients.get(marvellAdmin).emailTemplate === 'task-closed', 'email type is task-closed');
+          assert(recipients.get(marvellAdmin).emailTemplate === 'associated-pil-granted', 'email type is task-closed');
         });
     });
 
