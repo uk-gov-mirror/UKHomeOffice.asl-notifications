@@ -34,7 +34,7 @@
   "dependencies": {
     "@asl/schema": "^7.48.1",
     "@asl/service": "^7.13.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mustache": "^3.1.0",
     "r2": "^2.0.1",
     "winston": "^3.2.1"
