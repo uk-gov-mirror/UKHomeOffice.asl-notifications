@@ -2,7 +2,7 @@ module.exports = {
   id: '884846c7-9901-462a-9dd0-b0001fad9368',
   meta: {
     previous: 'new',
-    next: 'autoresolved',
+    next: 'resolved',
     user: {
       id: 'dee8605d-2113-4411-8a0a-dc131af87a76',
       profile: {
@@ -34,8 +34,8 @@ module.exports = {
       changedBy: 'a942ffc7-e7ca-4d76-a001-0b5048a057d2'
     }
   },
-  event: 'status:new:autoresolved',
-  status: 'autoresolved',
+  event: 'status:new:resolved',
+  status: 'resolved',
   data: {
     id: '0c7ac573-f4c2-4f2e-b6a0-684d6d4a52d7',
     data: {
