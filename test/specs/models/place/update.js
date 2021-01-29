@@ -3,7 +3,7 @@ const { merge } = require('lodash');
 const dbHelper = require('../../../helpers/db');
 const logger = require('../../../helpers/logger');
 const Recipients = require('../../../../lib/recipients');
-const { croydonAdmin1, croydonAdmin2 } = require('../../../helpers/users');
+const { croydonAdmin1, croydonAdmin2, croydonAdminUnsubscribed } = require('../../../helpers/users');
 
 const {
   pelAmendmentSubmitted,
@@ -80,12 +80,13 @@ describe('Place update (Establishment amendment)', () => {
         });
     });
 
-    it('notifies other admins at the establishment when the amendment lands with ASRU', () => {
+    it('notifies other subscribed admins at the establishment when the amendment lands with ASRU', () => {
       return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentSubmitted))
         .then(recipients => {
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
           assert(recipients.get(croydonAdmin2).emailTemplate === 'task-with-asru', 'email type is task-with-asru');
           assert(recipients.get(croydonAdmin2).applicant.id === croydonAdmin1, 'croydonAdmin1 is the applicant');
+          assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
         });
     });
 
@@ -93,24 +94,27 @@ describe('Place update (Establishment amendment)', () => {
       return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentApproved))
         .then(recipients => {
           assert(!recipients.has(croydonAdmin2), 'croydonAdmin2 is not in the recipients list');
+          assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
         });
     });
 
-    it('notifies other admins at the establishment when the amendment is granted', () => {
+    it('notifies other subscribed admins at the establishment when the amendment is granted', () => {
       return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentGranted))
         .then(recipients => {
           assert(recipients.has(croydonAdmin2), 'research101Admin2 is in the recipients list');
           assert(recipients.get(croydonAdmin2).emailTemplate === 'licence-amended', 'email type is licence-amended');
           assert(recipients.get(croydonAdmin2).applicant.id === croydonAdmin1, 'croydonAdmin1 is the applicant');
+          assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
         });
     });
 
-    it('notifies other admins at the establishment when the amendment is rejected', () => {
+    it('notifies other subscribed admins at the establishment when the amendment is rejected', () => {
       return this.recipientBuilder.getNotifications(makeUpdate(pelAmendmentRejected))
         .then(recipients => {
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
           assert(recipients.get(croydonAdmin2).emailTemplate === 'task-closed', 'email type is task-closed');
           assert(recipients.get(croydonAdmin2).applicant.id === croydonAdmin1, 'croydonAdmin1 is the applicant');
+          assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
         });
     });
 

@@ -2,7 +2,7 @@ const assert = require('assert');
 const dbHelper = require('../../../helpers/db');
 const logger = require('../../../helpers/logger');
 const Recipients = require('../../../../lib/recipients');
-const { basic, croydonAdmin1, croydonAdmin2 } = require('../../../helpers/users');
+const { basic, croydonAdmin1, croydonAdmin2, croydonAdminUnsubscribed } = require('../../../helpers/users');
 
 const {
   projectApplicationSubmitted,
@@ -77,7 +77,7 @@ describe('Project applications', () => {
 
   describe('Establishment admins', () => {
 
-    it('notifies all admins at the establishment when a new application is submitted', () => {
+    it('notifies all subscribed admins at the establishment when a new application is submitted', () => {
       return this.recipientBuilder.getNotifications(projectApplicationSubmitted)
         .then(recipients => {
           assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
@@ -86,6 +86,7 @@ describe('Project applications', () => {
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
           assert(recipients.get(croydonAdmin2).emailTemplate === 'task-action-required', 'email type is task-action-required');
           assert(recipients.get(croydonAdmin2).applicant.id === basic, 'basic user is the applicant');
+          assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
         });
     });
 
@@ -94,6 +95,7 @@ describe('Project applications', () => {
         .then(recipients => {
           assert(!recipients.has(croydonAdmin1), 'croydonAdmin1 is not in the recipients list');
           assert(!recipients.has(croydonAdmin2), 'croydonAdmin2 is not in the recipients list');
+          assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
         });
     });
 
@@ -102,10 +104,11 @@ describe('Project applications', () => {
         .then(recipients => {
           assert(!recipients.has(croydonAdmin1), 'croydonAdmin1 is not in the recipients list');
           assert(!recipients.has(croydonAdmin2), 'croydonAdmin2 is not in the recipients list');
+          assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
         });
     });
 
-    it('notifies all admins at the establishment when the application is granted', () => {
+    it('notifies all subscribed admins at the establishment when the application is granted', () => {
       return this.recipientBuilder.getNotifications(projectApplicationGranted)
         .then(recipients => {
           assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
@@ -114,10 +117,11 @@ describe('Project applications', () => {
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
           assert(recipients.get(croydonAdmin2).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(croydonAdmin2).applicant.id === basic, 'basic user is the applicant');
+          assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
         });
     });
 
-    it('notifies all admins at the establishment when the application is rejected', () => {
+    it('notifies all subscribed admins at the establishment when the application is rejected', () => {
       return this.recipientBuilder.getNotifications(projectApplicationRejected)
         .then(recipients => {
           assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
@@ -126,6 +130,7 @@ describe('Project applications', () => {
           assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
           assert(recipients.get(croydonAdmin2).emailTemplate === 'task-closed', 'email type is task-closed');
           assert(recipients.get(croydonAdmin2).applicant.id === basic, 'basic user is the applicant');
+          assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
         });
     });
 

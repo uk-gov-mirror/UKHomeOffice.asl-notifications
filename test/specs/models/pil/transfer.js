@@ -2,7 +2,16 @@ const assert = require('assert');
 const dbHelper = require('../../../helpers/db');
 const logger = require('../../../helpers/logger');
 const Recipients = require('../../../../lib/recipients');
-const { basic, croydonAdmin1, croydonAdmin2, croydonNtco, marvellAdmin, marvellNtco } = require('../../../helpers/users');
+const {
+  basic,
+  croydonAdmin1,
+  croydonAdmin2,
+  croydonAdminUnsubscribed,
+  croydonNtco,
+  marvellAdmin,
+  marvellAdminUnsubscribed,
+  marvellNtco
+} = require('../../../helpers/users');
 
 const {
   pilTransferSubmitted,
@@ -124,12 +133,13 @@ describe('PIL transfers', () => {
 
     describe('Admins', () => {
 
-      it('notifies all admins at the receiving establishment when a new transfer is submitted', () => {
+      it('notifies all subscribed admins at the receiving establishment when a new transfer is submitted', () => {
         return this.recipientBuilder.getNotifications(pilTransferSubmitted)
           .then(recipients => {
             assert(recipients.has(marvellAdmin), 'marvellAdmin is in the recipients list');
             assert(recipients.get(marvellAdmin).emailTemplate === 'task-opened', 'email type is task-opened');
             assert(recipients.get(marvellAdmin).applicant.id === basic, 'basic user is the applicant');
+            assert(!recipients.has(marvellAdminUnsubscribed), 'marvellAdminUnsubscribed is not in the recipients list');
           });
       });
 
@@ -137,6 +147,7 @@ describe('PIL transfers', () => {
         return this.recipientBuilder.getNotifications(pilTransferEndorsed)
           .then(recipients => {
             assert(!recipients.has(marvellAdmin), 'marvellAdmin is not in the recipients list');
+            assert(!recipients.has(marvellAdminUnsubscribed), 'marvellAdminUnsubscribed is not in the recipients list');
           });
       });
 
@@ -144,24 +155,27 @@ describe('PIL transfers', () => {
         return this.recipientBuilder.getNotifications(pilTransferApproved)
           .then(recipients => {
             assert(!recipients.has(marvellAdmin), 'marvellAdmin is not in the recipients list');
+            assert(!recipients.has(marvellAdminUnsubscribed), 'marvellAdminUnsubscribed is not in the recipients list');
           });
       });
 
-      it('notifies all admins at the receiving establishment when the transfer is granted', () => {
+      it('notifies all subscribed admins at the receiving establishment when the transfer is granted', () => {
         return this.recipientBuilder.getNotifications(pilTransferGranted)
           .then(recipients => {
             assert(recipients.has(marvellAdmin), 'marvellAdmin is in the recipients list');
             assert(recipients.get(marvellAdmin).emailTemplate === 'licence-granted', 'email type is licence-granted');
             assert(recipients.get(marvellAdmin).applicant.id === basic, 'basic user is the applicant');
+            assert(!recipients.has(marvellAdminUnsubscribed), 'marvellAdminUnsubscribed is not in the recipients list');
           });
       });
 
-      it('notifies all admins at the receiving establishment when the transfer is rejected', () => {
+      it('notifies all subscribed admins at the receiving establishment when the transfer is rejected', () => {
         return this.recipientBuilder.getNotifications(pilTransferRejected)
           .then(recipients => {
             assert(recipients.has(marvellAdmin), 'marvellAdmin is in the recipients list');
             assert(recipients.get(marvellAdmin).emailTemplate === 'task-closed', 'email type is task-closed');
             assert(recipients.get(marvellAdmin).applicant.id === basic, 'basic user is the applicant');
+            assert(!recipients.has(marvellAdminUnsubscribed), 'marvellAdminUnsubscribed is not in the recipients list');
           });
       });
 
@@ -218,7 +232,7 @@ describe('PIL transfers', () => {
 
     describe('Admins', () => {
 
-      it('notifies all admins at the outgoing establishment when a new transfer is submitted', () => {
+      it('notifies all subscribed admins at the outgoing establishment when a new transfer is submitted', () => {
         return this.recipientBuilder.getNotifications(pilTransferSubmitted)
           .then(recipients => {
             assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
@@ -227,6 +241,7 @@ describe('PIL transfers', () => {
             assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
             assert(recipients.get(croydonAdmin2).emailTemplate === 'task-opened', 'email type is task-opened');
             assert(recipients.get(croydonAdmin2).applicant.id === basic, 'basic user is the applicant');
+            assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
           });
       });
 
@@ -235,6 +250,7 @@ describe('PIL transfers', () => {
           .then(recipients => {
             assert(!recipients.has(croydonAdmin1), 'croydonAdmin1 is not in the recipients list');
             assert(!recipients.has(croydonAdmin2), 'croydonAdmin2 is not in the recipients list');
+            assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
           });
       });
 
@@ -243,10 +259,11 @@ describe('PIL transfers', () => {
           .then(recipients => {
             assert(!recipients.has(croydonAdmin1), 'croydonAdmin1 is not in the recipients list');
             assert(!recipients.has(croydonAdmin2), 'croydonAdmin2 is not in the recipients list');
+            assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
           });
       });
 
-      it('notifies all admins at the outgoing establishment when the transfer is granted', () => {
+      it('notifies all subscribed admins at the outgoing establishment when the transfer is granted', () => {
         return this.recipientBuilder.getNotifications(pilTransferGranted)
           .then(recipients => {
             assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
@@ -255,10 +272,11 @@ describe('PIL transfers', () => {
             assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
             assert(recipients.get(croydonAdmin2).emailTemplate === 'task-closed', 'email type is task-closed');
             assert(recipients.get(croydonAdmin2).applicant.id === basic, 'basic user is the applicant');
+            assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
           });
       });
 
-      it('notifies all admins at the outgoing establishment when the transfer is rejected', () => {
+      it('notifies all subscribed admins at the outgoing establishment when the transfer is rejected', () => {
         return this.recipientBuilder.getNotifications(pilTransferRejected)
           .then(recipients => {
             assert(recipients.has(croydonAdmin1), 'croydonAdmin1 is in the recipients list');
@@ -267,6 +285,7 @@ describe('PIL transfers', () => {
             assert(recipients.has(croydonAdmin2), 'croydonAdmin2 is in the recipients list');
             assert(recipients.get(croydonAdmin2).emailTemplate === 'task-closed', 'email type is task-closed');
             assert(recipients.get(croydonAdmin2).applicant.id === basic, 'basic user is the applicant');
+            assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
           });
       });
 
