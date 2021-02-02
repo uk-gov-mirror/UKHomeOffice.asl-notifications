@@ -2,7 +2,7 @@ const assert = require('assert');
 const dbHelper = require('../../../helpers/db');
 const logger = require('../../../helpers/logger');
 const Recipients = require('../../../../lib/recipients');
-const { basic, croydonAdmin1, croydonAdmin2, croydonNtco } = require('../../../helpers/users');
+const { basic, croydonAdmin1, croydonAdmin2, croydonAdminUnsubscribed, croydonNtco } = require('../../../helpers/users');
 
 const { pilAmendmentAsru } = require('../../../data/tasks');
 
@@ -24,7 +24,7 @@ describe('PIL amendments', () => {
 
   describe('ASRU Licensing Officer', () => {
 
-    it('notifies the licence holder, ntco and establishment admins when ASRU amends a PIL', () => {
+    it('notifies the licence holder, ntco and subscribed establishment admins when ASRU amends a PIL', () => {
       return this.recipientBuilder.getNotifications(pilAmendmentAsru)
         .then(recipients => {
           assert(recipients.has(basic), 'basic user is in the recipients list');
@@ -42,6 +42,8 @@ describe('PIL amendments', () => {
           assert(recipients.has(croydonNtco), 'croydonNtco is in the recipients list');
           assert.equal(recipients.get(croydonNtco).emailTemplate, 'licence-granted', 'email type is licence-granted');
           assert.equal(recipients.get(croydonNtco).applicant.id, basic, 'basic user is the applicant');
+
+          assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
         });
     });
 

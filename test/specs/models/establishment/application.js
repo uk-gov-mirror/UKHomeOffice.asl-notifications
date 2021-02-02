@@ -2,7 +2,7 @@ const assert = require('assert');
 const dbHelper = require('../../../helpers/db');
 const logger = require('../../../helpers/logger');
 const Recipients = require('../../../../lib/recipients');
-const { research101Admin, research101Admin2 } = require('../../../helpers/users');
+const { research101Admin, research101Admin2, research101AdminUnsubscribed } = require('../../../helpers/users');
 
 const {
   pelApplicationSubmitted,
@@ -75,12 +75,13 @@ describe('PEL applications', () => {
         });
     });
 
-    it('notifies other admins at the establishment when the application lands with ASRU', () => {
+    it('notifies other subscribed admins at the establishment when the application lands with ASRU', () => {
       return this.recipientBuilder.getNotifications(pelApplicationSubmitted)
         .then(recipients => {
           assert(recipients.has(research101Admin2), 'research101Admin2 is in the recipients list');
           assert(recipients.get(research101Admin2).emailTemplate === 'task-with-asru', 'email type is task-with-asru');
           assert(recipients.get(research101Admin2).applicant.id === research101Admin, 'research101Admin is the applicant');
+          assert(!recipients.has(research101AdminUnsubscribed), 'research101AdminUnsubscribed is not in the recipients list');
         });
     });
 
@@ -88,24 +89,27 @@ describe('PEL applications', () => {
       return this.recipientBuilder.getNotifications(pelApplicationApproved)
         .then(recipients => {
           assert(!recipients.has(research101Admin2), 'research101Admin2 is not in the recipients list');
+          assert(!recipients.has(research101AdminUnsubscribed), 'research101AdminUnsubscribed is not in the recipients list');
         });
     });
 
-    it('notifies other admins at the establishment when the application is granted', () => {
+    it('notifies other subscribed admins at the establishment when the application is granted', () => {
       return this.recipientBuilder.getNotifications(pelApplicationGranted)
         .then(recipients => {
           assert(recipients.has(research101Admin2), 'research101Admin2 is in the recipients list');
           assert(recipients.get(research101Admin2).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(research101Admin2).applicant.id === research101Admin, 'research101Admin is the applicant');
+          assert(!recipients.has(research101AdminUnsubscribed), 'research101AdminUnsubscribed is not in the recipients list');
         });
     });
 
-    it('notifies other admins at the establishment when the application is rejected', () => {
+    it('notifies other subscribed admins at the establishment when the application is rejected', () => {
       return this.recipientBuilder.getNotifications(pelApplicationRejected)
         .then(recipients => {
           assert(recipients.has(research101Admin2), 'research101Admin2 is in the recipients list');
           assert(recipients.get(research101Admin2).emailTemplate === 'task-closed', 'email type is task-closed');
           assert(recipients.get(research101Admin2).applicant.id === research101Admin, 'research101Admin is the applicant');
+          assert(!recipients.has(research101AdminUnsubscribed), 'research101AdminUnsubscribed is not in the recipients list');
         });
     });
 
