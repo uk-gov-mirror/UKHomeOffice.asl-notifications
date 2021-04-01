@@ -21,7 +21,20 @@ describe('Project applications', () => {
 
   beforeEach(() => {
     return dbHelper.reset()
-      .then(() => dbHelper.loadFixtures(this.schema));
+      .then(() => dbHelper.loadFixtures(this.schema))
+      .then(() => {
+        return this.schema.Project.query().insert({
+          id: '44ca3d4b-dedf-43e1-a6b7-12eb3cfb249b',
+          title: 'My first project',
+          status: 'inactive',
+          createdAt: '2019-12-12T15:20:00.251Z',
+          updatedAt: '2019-12-12T15:20:32.191Z',
+          licenceNumber: 'TEST-PPL-APPLICATION',
+          schemaVersion: 1,
+          establishmentId: 8201,
+          licenceHolderId: basic
+        });
+      });
   });
 
   after(() => {
