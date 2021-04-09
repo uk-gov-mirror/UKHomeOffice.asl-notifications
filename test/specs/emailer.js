@@ -45,7 +45,7 @@ describe('Emailer', () => {
           'croydon.admin@example.com'
         ];
         assert.equal(notifications.length, 3);
-        assert.deepEqual(notifications.map(n => n.to), expected);
+        assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
       });
   });
 

@@ -1,3 +1,4 @@
+const uuid = require('uuid');
 const sinon = require('sinon');
 const moment = require('moment');
 const assert = require('assert');
@@ -27,7 +28,7 @@ describe('Poll notifications', () => {
       name: 'Testy McTestface',
       subject: 'Test',
       html: '<h1>test</h1>',
-      action: 'test-email'
+      identifier: uuid()
     };
 
     return Promise.resolve()
@@ -51,7 +52,7 @@ describe('Poll notifications', () => {
         name: 'Testy McTestface',
         subject: 'Test',
         html: '<h1>test</h1>',
-        action: 'test-email',
+        identifier: uuid(),
         completed: moment().toISOString()
       },
       {
@@ -59,7 +60,7 @@ describe('Poll notifications', () => {
         name: 'Testy2 McTestface',
         subject: 'Test2',
         html: '<h1>test2</h1>',
-        action: 'test-email-2'
+        identifier: uuid()
       }
     ];
 
