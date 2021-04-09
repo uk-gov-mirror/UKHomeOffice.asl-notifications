@@ -1,10 +1,11 @@
-const uuid = require('uuid');
+const { v4: uuid } = require('uuid');
 const sinon = require('sinon');
 const moment = require('moment');
 const assert = require('assert');
 const dbHelper = require('../../helpers/db');
 const logger = require('../../helpers/logger');
 const poll = require('../../../tasks/poll-notifications');
+const { basic } = require('../../helpers/users');
 
 describe('Poll notifications', () => {
 
@@ -24,8 +25,9 @@ describe('Poll notifications', () => {
 
   it('calls sendEmail for each incomplete notification in the db, updating to complete', () => {
     const params = {
-      to: 'test@test.com',
-      name: 'Testy McTestface',
+      profileId: basic,
+      to: 'basic.user@example.com',
+      name: 'Basic User',
       subject: 'Test',
       html: '<h1>test</h1>',
       identifier: uuid()
@@ -38,7 +40,7 @@ describe('Poll notifications', () => {
         assert.equal(this.sendEmail.called, true);
         assert.equal(this.sendEmail.callCount, 1);
       })
-      .then(() => this.schema.Notification.query().findOne('to', 'test@test.com'))
+      .then(() => this.schema.Notification.query().findOne({ profileId: basic }))
       .then(notification => {
         assert.ok(this.sendEmail.calledWith(notification));
         assert.ok(notification.completed !== null);
@@ -48,18 +50,20 @@ describe('Poll notifications', () => {
   it('calls sendEmail for each incomplete notification in the db, updating to complete', () => {
     const params = [
       {
-        to: 'test@test.com',
-        name: 'Testy McTestface',
+        profileId: basic,
+        to: 'basic.user@example.com',
+        name: 'Basic User',
         subject: 'Test',
         html: '<h1>test</h1>',
         identifier: uuid(),
         completed: moment().toISOString()
       },
       {
-        to: 'test2@test.com',
-        name: 'Testy2 McTestface',
-        subject: 'Test2',
-        html: '<h1>test2</h1>',
+        profileId: basic,
+        to: 'basic.user2@example.com',
+        name: 'Basic User',
+        subject: 'Test',
+        html: '<h1>test</h1>',
         identifier: uuid()
       }
     ];
@@ -71,7 +75,7 @@ describe('Poll notifications', () => {
         assert.equal(this.sendEmail.called, true);
         assert.equal(this.sendEmail.callCount, 1);
       })
-      .then(() => this.schema.Notification.query().findOne({ to: 'test2@test.com' }))
+      .then(() => this.schema.Notification.query().findOne({ to: 'basic.user2@example.com' }))
       .then(notification => {
         assert.ok(this.sendEmail.calledWith(notification));
       })

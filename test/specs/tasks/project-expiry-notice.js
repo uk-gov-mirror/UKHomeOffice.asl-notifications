@@ -1,4 +1,4 @@
-const uuid = require('uuid');
+const { v4: uuid } = require('uuid');
 const sinon = require('sinon');
 const moment = require('moment');
 const assert = require('assert');
