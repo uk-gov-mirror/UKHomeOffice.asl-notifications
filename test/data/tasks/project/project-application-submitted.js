@@ -86,5 +86,6 @@ module.exports = {
       licenceHolderId: '304235c0-1a83-49f0-87ca-b11b1ad1e147'
     },
     establishmentId: 8201
-  }
+  },
+  req: '82e819db-bf29-41c3-a258-d0e7060a75bd'
 };
