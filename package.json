@@ -9,7 +9,8 @@
     "test:lint": "eslint .",
     "pretest:unit": "NODE_ENV=test npm run migrate",
     "test:unit": "NODE_ENV=test mocha ./test --recursive --exit --timeout 5000",
-    "migrate": "DATABASE_NAME=asl-test knex migrate:latest --knexfile ./node_modules/@asl/schema/knexfile.js"
+    "migrate": "DATABASE_NAME=asl-test knex migrate:latest --knexfile ./node_modules/@asl/schema/knexfile.js",
+    "task": "node ./tasks/run-task"
   },
   "repository": {
     "type": "git",
@@ -32,12 +33,16 @@
     "nodemon": "^2.0.4"
   },
   "dependencies": {
-    "@asl/schema": "^9.14.0",
+    "@asl/schema": "^9.15.0",
     "@asl/service": "^7.13.0",
+    "hot-shots": "^8.3.1",
     "lodash": "^4.17.19",
+    "minimist": "^1.2.5",
     "moment": "^2.29.1",
     "mustache": "^3.1.0",
     "r2": "^2.0.1",
+    "sinon": "^10.0.1",
+    "uuid": "^8.3.2",
     "winston": "^3.2.1"
   }
 }
