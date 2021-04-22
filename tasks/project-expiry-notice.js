@@ -1,9 +1,9 @@
 const moment = require('moment');
 const Emailer = require('../lib/emailer');
 
-function expiryNotice(emailer, Project, upper, lower, action) {
+function expiryNotice(emailer, Project, upper, action) {
   const ub = moment().add(upper, 'months').toISOString();
-  const lb = moment().add(lower, 'months').toISOString();
+  const lb = moment().add(upper, 'months').subtract(1, 'week').toISOString();
 
   return Promise.resolve()
     .then(() => {
@@ -40,8 +40,8 @@ module.exports = ({ schema, logger, publicUrl }) => {
   const emailer = Emailer({ schema, logger, publicUrl });
 
   return Promise.resolve()
-    .then(() => expiryNotice(emailer, Project, 12, 6, 'project-expiring-12'))
-    .then(() => expiryNotice(emailer, Project, 6, 3, 'project-expiring-6'))
-    .then(() => expiryNotice(emailer, Project, 3, 0, 'project-expiring-3'))
-    .then(() => expiryNotice(emailer, Project, 0, -1, 'project-expired'));
+    .then(() => expiryNotice(emailer, Project, 12, 'project-expiring-12'))
+    .then(() => expiryNotice(emailer, Project, 6, 'project-expiring-6'))
+    .then(() => expiryNotice(emailer, Project, 3, 'project-expiring-3'))
+    .then(() => expiryNotice(emailer, Project, 0, 'project-expired'));
 };
