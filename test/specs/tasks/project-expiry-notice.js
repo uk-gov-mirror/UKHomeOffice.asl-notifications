@@ -28,7 +28,7 @@ describe('Project expiry', () => {
   it('adds 12 month notification for a project due to expire in 12 months', () => {
     const project = {
       licenceHolderId: basic,
-      expiryDate: moment().add(1, 'year').toISOString(),
+      expiryDate: moment().add(1, 'year').subtract(1, 'day').toISOString(),
       status: 'active',
       establishmentId: 8201,
       licenceNumber: 'XYZ12345'
@@ -57,7 +57,7 @@ describe('Project expiry', () => {
   it('adds 6 month notification for a project due to expire in 6 months', () => {
     const project = {
       licenceHolderId: basic,
-      expiryDate: moment().add(6, 'months').toISOString(),
+      expiryDate: moment().add(6, 'months').subtract(1, 'day').toISOString(),
       status: 'active',
       establishmentId: 8201,
       licenceNumber: 'XYZ12345'
@@ -86,7 +86,7 @@ describe('Project expiry', () => {
   it('adds 3 month notification for a project due to expire in 3 months', () => {
     const project = {
       licenceHolderId: basic,
-      expiryDate: moment().add(3, 'months').toISOString(),
+      expiryDate: moment().add(3, 'months').subtract(1, 'day').toISOString(),
       status: 'active',
       establishmentId: 8201,
       licenceNumber: 'XYZ12345'
@@ -112,10 +112,10 @@ describe('Project expiry', () => {
       });
   });
 
-  it('adds an expiry notification for a project that has expired in the last month', () => {
+  it('adds an expiry notification for a project that has expired in the last week', () => {
     const project = {
       licenceHolderId: basic,
-      expiryDate: moment().toISOString(),
+      expiryDate: moment().subtract(1, 'day').toISOString(),
       status: 'expired',
       establishmentId: 8201,
       licenceNumber: 'XYZ12345'
@@ -141,10 +141,10 @@ describe('Project expiry', () => {
       });
   });
 
-  it('doesn\'t add an expiry notification for a project that has expired over a month ago', () => {
+  it('doesn\'t add an expiry notification for a project that has expired over a week ago', () => {
     const project = {
       licenceHolderId: basic,
-      expiryDate: moment().subtract(5, 'weeks').toISOString(),
+      expiryDate: moment().subtract(9, 'days').toISOString(),
       status: 'expired',
       establishmentId: 8201,
       licenceNumber: 'XYZ12345'
