@@ -1,14 +1,13 @@
 const moment = require('moment');
 const Emailer = require('../lib/emailer');
 
-
 module.exports = ({ schema, logger, publicUrl }) => {
   const { Project } = schema;
 
   const emailer = Emailer({ schema, logger, publicUrl });
 
   const expiryNotice = (upper, action) => {
-    logger.debug('Looking for projects expiring in next ${upper} months');
+    logger.debug(`Looking for projects expiring in next ${upper} months`);
     const ub = moment().add(upper, 'months').toISOString();
     const lb = moment().add(upper, 'months').subtract(1, 'week').toISOString();
 
