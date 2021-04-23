@@ -27,6 +27,7 @@ describe('Project expiry', () => {
 
   it('adds 12 month notification for a project due to expire in 12 months', () => {
     const project = {
+      id: uuid(),
       licenceHolderId: basic,
       expiryDate: moment().add(1, 'year').subtract(1, 'day').toISOString(),
       status: 'active',
@@ -36,17 +37,19 @@ describe('Project expiry', () => {
 
     return Promise.resolve()
       .then(() => this.schema.Project.query().insert(project))
+      .then(() => this.schema.ProjectEstablishment.query().insert({ projectId: project.id, establishmentId: 123, status: 'active' }))
       .then(() => expiryNotice({ schema: this.schema, logger, publicUrl }))
       .then(() => this.schema.Notification.query())
       .then(notifications => {
         const expected = [
           'basic.user@example.com',
           'vice-chancellor@example.com',
-          'croydon.admin@example.com'
+          'croydon.admin@example.com',
+          'aa-admin@example.com'
         ];
         const expectedSubject = `Reminder: Project licence ${project.licenceNumber} expires in 12 months`;
 
-        assert.equal(notifications.length, 3);
+        assert.equal(notifications.length, expected.length);
         assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
         notifications.forEach(notification => {
           assert.equal(notification.subject, expectedSubject);
@@ -75,7 +78,7 @@ describe('Project expiry', () => {
         ];
         const expectedSubject = `Reminder: Project licence ${project.licenceNumber} expires in 6 months`;
 
-        assert.equal(notifications.length, 3);
+        assert.equal(notifications.length, expected.length);
         assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
         notifications.forEach(notification => {
           assert.equal(notification.subject, expectedSubject);
@@ -104,7 +107,7 @@ describe('Project expiry', () => {
         ];
         const expectedSubject = `Reminder: Project licence ${project.licenceNumber} expires in 3 months`;
 
-        assert.equal(notifications.length, 3);
+        assert.equal(notifications.length, expected.length);
         assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
         notifications.forEach(notification => {
           assert.equal(notification.subject, expectedSubject);
@@ -114,6 +117,7 @@ describe('Project expiry', () => {
 
   it('adds an expiry notification for a project that has expired in the last week', () => {
     const project = {
+      id: uuid(),
       licenceHolderId: basic,
       expiryDate: moment().subtract(1, 'day').toISOString(),
       status: 'expired',
@@ -123,17 +127,19 @@ describe('Project expiry', () => {
 
     return Promise.resolve()
       .then(() => this.schema.Project.query().insert(project))
+      .then(() => this.schema.ProjectEstablishment.query().insert({ projectId: project.id, establishmentId: 123, status: 'active' }))
       .then(() => expiryNotice({ schema: this.schema, logger, publicUrl }))
       .then(() => this.schema.Notification.query())
       .then(notifications => {
         const expected = [
           'basic.user@example.com',
           'vice-chancellor@example.com',
-          'croydon.admin@example.com'
+          'croydon.admin@example.com',
+          'aa-admin@example.com'
         ];
         const expectedSubject = `Important: project licence ${project.licenceNumber} has expired - action required`;
 
-        assert.equal(notifications.length, 3);
+        assert.equal(notifications.length, expected.length);
         assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
         notifications.forEach(notification => {
           assert.equal(notification.subject, expectedSubject);

@@ -1,3 +1,5 @@
+const { v4: uuid } = require('uuid');
+
 const {
   basic,
   croydonAdmin1,
@@ -32,6 +34,11 @@ module.exports = models => {
           id: 101,
           name: 'Research 101',
           status: 'inactive'
+        },
+        {
+          id: 123,
+          name: 'AA est',
+          status: 'active'
         }
       ]);
     })
@@ -58,6 +65,20 @@ module.exports = models => {
             {
               establishmentId: 8201,
               type: 'pelh'
+            }
+          ]
+        },
+        {
+          id: uuid(),
+          title: 'Dr',
+          firstName: 'AA',
+          lastName: 'Admin',
+          dob: '1970-04-23',
+          email: 'aa-admin@example.com',
+          establishments: [
+            {
+              id: 123,
+              role: 'admin'
             }
           ]
         },
