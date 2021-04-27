@@ -13,16 +13,10 @@ module.exports = ({ schema, logger, publicUrl }) => {
 
     return Promise.resolve()
       .then(() => {
-        let query = Project.query()
+        return Project.query()
           .where('expiryDate', '<=', ub)
-          .where('expiryDate', '>', lb);
-        if (action === 'project-expired') {
-          // project may or may not already be expired
-          query = query.whereIn('status', ['active', 'expired']);
-        } else {
-          query = query.where('status', 'active');
-        }
-        return query;
+          .where('expiryDate', '>', lb)
+          .where('status', 'active');
       })
       .then(models => {
         logger.debug(`Found ${models.length} projects due to expire in the next ${upper} months`);
@@ -41,9 +35,37 @@ module.exports = ({ schema, logger, publicUrl }) => {
       });
   };
 
+  const expiredNotice = () => {
+    logger.debug('Looking for projects expired in the last week');
+    const ub = moment().startOf('day').toISOString();
+    const lb = moment().startOf('day').subtract(1, 'week').toISOString();
+
+    return Promise.resolve()
+      .then(() => {
+        return Project.query()
+          .where('expiryDate', '<', ub)
+          .where('expiryDate', '>', lb)
+          .whereIn('status', ['active', 'expired']);
+      })
+      .then(models => {
+        logger.debug(`Found ${models.length} projects that expired in the last week`);
+        return models.reduce((promise, model) => {
+          const task = {
+            event: 'direct-notification',
+            data: {
+              id: model.id,
+              model: 'project',
+              action: 'project-expired'
+            }
+          };
+          return emailer(task);
+        }, Promise.resolve());
+      });
+  };
+
   return Promise.resolve()
     .then(() => expiryNotice(12, 'project-expiring-12'))
     .then(() => expiryNotice(6, 'project-expiring-6'))
     .then(() => expiryNotice(3, 'project-expiring-3'))
-    .then(() => expiryNotice(0, 'project-expired'));
+    .then(() => expiredNotice());
 };

@@ -165,6 +165,24 @@ describe('Project expiry', () => {
       });
   });
 
+  it('doesn\'t add an expiry notification for a project that is expiring on the same day', () => {
+    const project = {
+      licenceHolderId: basic,
+      expiryDate: moment().startOf('day').add(1, 'minute').toISOString(),
+      status: 'expired',
+      establishmentId: 8201,
+      licenceNumber: 'XYZ12345'
+    };
+
+    return Promise.resolve()
+      .then(() => this.schema.Project.query().insert(project))
+      .then(() => expiryNotice({ schema: this.schema, logger, publicUrl }))
+      .then(() => this.schema.Notification.query())
+      .then(notifications => {
+        assert.equal(notifications.length, 0);
+      });
+  });
+
   it('adds expiry notifications for all projects due to expire, ignoring ones already added', () => {
     const ids = {
       notExpired: uuid(),
@@ -210,7 +228,7 @@ describe('Project expiry', () => {
       {
         id: ids.expired,
         licenceHolderId: basic,
-        expiryDate: moment().toISOString(),
+        expiryDate: moment().subtract(1, 'day').toISOString(),
         status: 'expired',
         establishmentId: 8201,
         licenceNumber: 'XYZ12349'
