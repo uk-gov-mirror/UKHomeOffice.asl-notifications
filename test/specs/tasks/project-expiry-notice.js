@@ -287,4 +287,102 @@ describe('Project expiry', () => {
       });
   });
 
+  describe('email content', () => {
+
+    it('includes publications date in expiry warning', () => {
+      const project = {
+        id: uuid(),
+        licenceHolderId: basic,
+        expiryDate: moment().add(1, 'year').subtract(1, 'day').toISOString(),
+        status: 'active',
+        establishmentId: 8201,
+        licenceNumber: 'XYZ12345'
+      };
+      const publicationsDate = moment(project.expiryDate).add(6, 'months').format('D MMM YYYY');
+
+      return Promise.resolve()
+        .then(() => this.schema.Project.query().insert(project))
+        .then(() => this.schema.ProjectEstablishment.query().insert({ projectId: project.id, establishmentId: 123, status: 'active' }))
+        .then(() => expiryNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          notifications.forEach(notification => {
+            assert.ok(notification.html.includes(`Submit a list of any publications your work has been published in by ${publicationsDate}.`));
+          });
+        });
+    });
+
+    it('includes publications date in expired notice', () => {
+      const project = {
+        id: uuid(),
+        licenceHolderId: basic,
+        expiryDate: moment().subtract(1, 'day').toISOString(),
+        status: 'expired',
+        establishmentId: 8201,
+        licenceNumber: 'XYZ12345'
+      };
+      const publicationsDate = moment(project.expiryDate).add(6, 'months').format('D MMM YYYY');
+
+      return Promise.resolve()
+        .then(() => this.schema.Project.query().insert(project))
+        .then(() => this.schema.ProjectEstablishment.query().insert({ projectId: project.id, establishmentId: 123, status: 'active' }))
+        .then(() => expiryNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          notifications.forEach(notification => {
+            assert.ok(notification.html.includes(`Submit a list of any publications your work has been published in by ${publicationsDate}.`));
+          });
+        });
+    });
+
+    it('includes RA date in expiry warning', () => {
+      const project = {
+        id: uuid(),
+        licenceHolderId: basic,
+        expiryDate: moment().add(1, 'year').subtract(1, 'day').toISOString(),
+        raDate: moment('2025-05-31').toISOString(),
+        status: 'active',
+        establishmentId: 8201,
+        licenceNumber: 'XYZ12345'
+      };
+
+      return Promise.resolve()
+        .then(() => this.schema.Project.query().insert(project))
+        .then(() => this.schema.ProjectEstablishment.query().insert({ projectId: project.id, establishmentId: 123, status: 'active' }))
+        .then(() => expiryNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          notifications.forEach(notification => {
+            assert.ok(notification.html.includes('Submit a retrospective assessment'));
+            assert.ok(notification.html.includes('31 May 2025'));
+          });
+        });
+    });
+
+    it('includes RA date in expired notice', () => {
+      const project = {
+        id: uuid(),
+        licenceHolderId: basic,
+        expiryDate: moment().subtract(1, 'day').toISOString(),
+        raDate: moment('2025-05-31').toISOString(),
+        status: 'expired',
+        establishmentId: 8201,
+        licenceNumber: 'XYZ12345'
+      };
+
+      return Promise.resolve()
+        .then(() => this.schema.Project.query().insert(project))
+        .then(() => this.schema.ProjectEstablishment.query().insert({ projectId: project.id, establishmentId: 123, status: 'active' }))
+        .then(() => expiryNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          notifications.forEach(notification => {
+            assert.ok(notification.html.includes('Submit a retrospective assessment'));
+            assert.ok(notification.html.includes('31 May 2025'));
+          });
+        });
+    });
+
+  });
+
 });
