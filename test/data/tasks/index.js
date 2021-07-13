@@ -32,6 +32,8 @@ module.exports = {
   projectApplicationGranted: require('./project/project-application-granted'),
   projectApplicationRejected: require('./project/project-application-rejected'),
   projectRevocation: require('./project/project-revocation'),
+  projectTransferSubmitted: require('./project/project-transfer-submitted'),
+  projectTransferGranted: require('./project/project-transfer-granted'),
 
   // Profile tasks
   profileAmendmentAutoresolved: require('./profile/profile-amendment-autoresolved'),
