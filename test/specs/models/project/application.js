@@ -2,7 +2,7 @@ const assert = require('assert');
 const dbHelper = require('../../../helpers/db');
 const logger = require('../../../helpers/logger');
 const Recipients = require('../../../../lib/recipients');
-const { basic, croydonAdmin1, croydonAdmin2, croydonAdminUnsubscribed } = require('../../../helpers/users');
+const { basic, croydonAdmin1, croydonAdmin2, croydonAdminUnsubscribed, collaborator, collaboratorUnsubscribed } = require('../../../helpers/users');
 
 const {
   projectApplicationSubmitted,
@@ -34,6 +34,12 @@ describe('Project applications', () => {
           establishmentId: 8201,
           licenceHolderId: basic
         });
+      })
+      .then(project => {
+        return this.schema.ProjectProfile.query().insert([
+          { projectId: project.id, profileId: collaborator },
+          { projectId: project.id, profileId: collaboratorUnsubscribed }
+        ]);
       });
   });
 
@@ -144,6 +150,20 @@ describe('Project applications', () => {
           assert(recipients.get(croydonAdmin2).emailTemplate === 'task-closed', 'email type is task-closed');
           assert(recipients.get(croydonAdmin2).applicant.id === basic, 'basic user is the applicant');
           assert(!recipients.has(croydonAdminUnsubscribed), 'croydonAdminUnsubscribed is not in the recipients list');
+        });
+    });
+
+  });
+
+  describe('Project collaborators', () => {
+
+    it('notifies all subscribed collaborators when the application is granted', () => {
+      return this.recipientBuilder.getNotifications(projectApplicationGranted)
+        .then(recipients => {
+          assert(recipients.has(collaborator), 'collaborator is in the recipients list');
+          assert(recipients.get(collaborator).emailTemplate === 'licence-granted', 'email type is licence-granted');
+          assert(recipients.get(collaborator).applicant.id === basic, 'basic user is the applicant');
+          assert(!recipients.has(collaboratorUnsubscribed), 'collaboratorUnsubscribed is not in the recipients list');
         });
     });
 

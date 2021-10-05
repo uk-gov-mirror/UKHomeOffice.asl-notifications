@@ -3,13 +3,13 @@ const moment = require('moment');
 const dbHelper = require('../../../helpers/db');
 const logger = require('../../../helpers/logger');
 const Recipients = require('../../../../lib/recipients');
-const { basic } = require('../../../helpers/users');
+const { basic, collaborator, collaboratorUnsubscribed } = require('../../../helpers/users');
 
 const {
   projectRevocation
 } = require('../../../data/tasks');
 
-describe('Project applications', () => {
+describe('Project revocations', () => {
 
   before(() => {
     this.schema = dbHelper.init();
@@ -21,6 +21,12 @@ describe('Project applications', () => {
       .then(() => dbHelper.loadFixtures(this.schema))
       .then(() => {
         return this.schema.Project.query().insert(projectRevocation.data.modelData);
+      })
+      .then(project => {
+        return this.schema.ProjectProfile.query().insert([
+          { projectId: project.id, profileId: collaborator },
+          { projectId: project.id, profileId: collaboratorUnsubscribed }
+        ]);
       });
   });
 
@@ -52,6 +58,20 @@ describe('Project applications', () => {
       return this.recipientBuilder.getNotifications(projectRevocation)
         .then(recipients => {
           assert.equal(recipients.get(basic).ropsDate, expected);
+        });
+    });
+
+  });
+
+  describe('Project collaborators', () => {
+
+    it('notifies all subscribed collaborators when the project is revoked', () => {
+      return this.recipientBuilder.getNotifications(projectRevocation)
+        .then(recipients => {
+          assert(recipients.has(collaborator), 'collaborator is in the recipients list');
+          assert(recipients.get(collaborator).emailTemplate === 'ppl-revoked', 'email type is ppl-revoked');
+          assert(recipients.get(collaborator).applicant.id === basic, 'basic user is the applicant');
+          assert(!recipients.has(collaboratorUnsubscribed), 'collaboratorUnsubscribed is not in the recipients list');
         });
     });
 

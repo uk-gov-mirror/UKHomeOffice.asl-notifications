@@ -9,5 +9,7 @@ module.exports = {
   marvellNtco: '133a1e2b-65d2-4b49-a372-d2e7bd5c50ea',
   research101Admin: 'bc499bae-30ca-400c-9494-868d23dc301f',
   research101Admin2: 'e7b205cf-1acf-4eb3-bcde-ab63c21d0551',
-  research101AdminUnsubscribed: '7371e6c5-1836-40bd-98c2-ce05193539ed'
+  research101AdminUnsubscribed: '7371e6c5-1836-40bd-98c2-ce05193539ed',
+  collaborator: 'c1bf9c86-fed7-4ea7-949c-e99ffeed717b',
+  collaboratorUnsubscribed: '5902a1d5-1635-4ccd-b9c8-db4d20aac847'
 };
