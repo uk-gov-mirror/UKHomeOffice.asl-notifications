@@ -11,7 +11,9 @@ const {
   marvellNtco,
   research101Admin,
   research101Admin2,
-  research101AdminUnsubscribed
+  research101AdminUnsubscribed,
+  collaborator,
+  collaboratorUnsubscribed
 } = require('../helpers/users');
 
 module.exports = models => {
@@ -272,6 +274,39 @@ module.exports = models => {
             {
               id: 101,
               role: 'admin'
+            }
+          ]
+        },
+        {
+          id: collaborator,
+          title: 'Ms',
+          firstName: 'Collab',
+          lastName: 'Orator',
+          dob: '1970-10-27',
+          email: 'collab.orator@example.com',
+          establishments: [
+            {
+              id: 8201,
+              role: 'basic'
+            }
+          ]
+        },
+        {
+          id: collaboratorUnsubscribed,
+          title: 'Col',
+          firstName: 'Unsub',
+          lastName: 'laborator',
+          dob: '1970-10-27',
+          email: 'unsub.collaborator@example.com',
+          emailPreferences: {
+            preferences: {
+              projectCollaborations: false
+            }
+          },
+          establishments: [
+            {
+              id: 8201,
+              role: 'basic'
             }
           ]
         }
