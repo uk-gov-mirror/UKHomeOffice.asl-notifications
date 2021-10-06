@@ -9,7 +9,7 @@ const StatsD = require('hot-shots');
 const statsd = new StatsD();
 
 const args = require('minimist')(process.argv.slice(2));
-const task = args._[0];
+const job = args._[0];
 
 const settings = require('../config');
 const Logger = require('../lib/utils/logger');
@@ -27,15 +27,15 @@ const run = fn => {
     }));
 };
 
-if (!task) {
-  console.error(`Task must be defined.\n\nUsage:  npm run task -- ./tasks/file.js\n\n`);
-  statsd.increment('asl.task.error', 1);
+if (!job) {
+  console.error(`Job must be defined.\n\nUsage:  npm run job -- ./jobs/file.js\n\n`);
+  statsd.increment('asl.job.error', 1);
   process.exit(1);
 }
 
 Promise.resolve()
   .then(() => {
-    return require(path.resolve(process.cwd(), task));
+    return require(path.resolve(process.cwd(), job));
   })
   .then(fn => {
     return run(fn);
@@ -45,6 +45,6 @@ Promise.resolve()
   })
   .catch(e => {
     logger.error({ message: e.message, stack: e.stack, ...e });
-    statsd.increment('asl.task.error', 1);
+    statsd.increment('asl.job.error', 1);
     process.exit(1);
   });
