@@ -4,7 +4,7 @@ const moment = require('moment');
 const assert = require('assert');
 const dbHelper = require('../../helpers/db');
 const logger = require('../../helpers/logger');
-const expiryNotice = require('../../../tasks/project-expiry-notice');
+const expiryNotice = require('../../../jobs/project-expiry-notice');
 const { basic } = require('../../helpers/users');
 
 const publicUrl = 'http://localhost:8080';
