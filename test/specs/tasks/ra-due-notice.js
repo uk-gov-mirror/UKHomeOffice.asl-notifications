@@ -46,8 +46,7 @@ describe('Retrospective assessment due', () => {
           const expected = [
             'basic.user@example.com',
             'vice-chancellor@example.com',
-            'croydon.admin@example.com',
-            'aa-admin@example.com'
+            'croydon.admin@example.com'
           ];
 
           const expectedSubject = `Reminder: Retrospective assessment due in 3 months for expired project licence ${project.licenceNumber}`;
@@ -80,8 +79,7 @@ describe('Retrospective assessment due', () => {
           const expected = [
             'basic.user@example.com',
             'vice-chancellor@example.com',
-            'croydon.admin@example.com',
-            'aa-admin@example.com'
+            'croydon.admin@example.com'
           ];
 
           const expectedSubject = `Reminder: Retrospective assessment due in 1 month for expired project licence ${project.licenceNumber}`;
@@ -114,8 +112,7 @@ describe('Retrospective assessment due', () => {
           const expected = [
             'basic.user@example.com',
             'vice-chancellor@example.com',
-            'croydon.admin@example.com',
-            'aa-admin@example.com'
+            'croydon.admin@example.com'
           ];
 
           const expectedSubject = `Reminder: Retrospective assessment due today for expired project licence ${project.licenceNumber}`;
@@ -175,8 +172,7 @@ describe('Retrospective assessment due', () => {
           const expected = [
             'basic.user@example.com',
             'vice-chancellor@example.com',
-            'croydon.admin@example.com',
-            'aa-admin@example.com'
+            'croydon.admin@example.com'
           ];
 
           const expectedSubject = `Reminder: Retrospective assessment due in 3 months for revoked project licence ${project.licenceNumber}`;
@@ -209,8 +205,7 @@ describe('Retrospective assessment due', () => {
           const expected = [
             'basic.user@example.com',
             'vice-chancellor@example.com',
-            'croydon.admin@example.com',
-            'aa-admin@example.com'
+            'croydon.admin@example.com'
           ];
 
           const expectedSubject = `Reminder: Retrospective assessment due in 1 month for revoked project licence ${project.licenceNumber}`;
@@ -243,8 +238,7 @@ describe('Retrospective assessment due', () => {
           const expected = [
             'basic.user@example.com',
             'vice-chancellor@example.com',
-            'croydon.admin@example.com',
-            'aa-admin@example.com'
+            'croydon.admin@example.com'
           ];
 
           const expectedSubject = `Reminder: Retrospective assessment due today for revoked project licence ${project.licenceNumber}`;
