@@ -7,6 +7,7 @@
     "dev": "nodemon -r dotenv/config index.js",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint .",
+    "test:audit": "npx audit-ci --high --skip-dev --config .auditrc.json",
     "pretest:unit": "NODE_ENV=test npm run migrate",
     "test:unit": "NODE_ENV=test mocha ./test --recursive --exit --timeout 5000",
     "migrate": "DATABASE_NAME=asl-test knex migrate:latest --knexfile ./node_modules/@asl/schema/knexfile.js",
