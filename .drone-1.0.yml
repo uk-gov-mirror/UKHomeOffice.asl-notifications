@@ -11,7 +11,7 @@ steps:
       NPM_AUTH_TOKEN:
         from_secret: npm_auth_token
     commands:
-      - npm ci
+      - npm ci --audit false
   - name: test
     image: node:14
     environment:
@@ -33,7 +33,7 @@ steps:
       NPM_AUTH_TOKEN:
         from_secret: npm_auth_token
     commands:
-      - npm audit --audit-level=high --production
+      - npx audit-ci --high --skip-dev --config .auditrc.json
   - name: docker build
     image: docker:dind
     environment:
