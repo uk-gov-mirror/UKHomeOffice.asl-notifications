@@ -4,7 +4,7 @@ const moment = require('moment');
 const assert = require('assert');
 const dbHelper = require('../../helpers/db');
 const logger = require('../../helpers/logger');
-const poll = require('../../../tasks/poll-notifications');
+const poll = require('../../../jobs/poll-notifications');
 const { basic } = require('../../helpers/users');
 
 describe('Poll notifications', () => {

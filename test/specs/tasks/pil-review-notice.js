@@ -4,7 +4,7 @@ const moment = require('moment');
 const assert = require('assert');
 const dbHelper = require('../../helpers/db');
 const logger = require('../../helpers/logger');
-const reviewNotice = require('../../../tasks/pil-review-notice');
+const reviewNotice = require('../../../jobs/pil-review-notice');
 const { basic } = require('../../helpers/users');
 
 const publicUrl = 'http://localhost:8080';
