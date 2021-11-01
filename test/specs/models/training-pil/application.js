@@ -152,14 +152,6 @@ describe('Training PIL applications', () => {
         });
     });
 
-    it('notifies all subscribed admins at the establishment when the application is granted', () => {
-      return this.recipientBuilder.getNotifications(trainingPilGranted)
-        .then(recipients => {
-          assert(recipients.has(trainingAdmin), 'trainingAdmin is in the recipients list');
-          assert(recipients.get(trainingAdmin).emailTemplate === 'training-pil-granted');
-        });
-    });
-
     it('notifies all subscribed admins at the establishment when the application is rejected', () => {
       return this.recipientBuilder.getNotifications(trainingPilRejected)
         .then(recipients => {
