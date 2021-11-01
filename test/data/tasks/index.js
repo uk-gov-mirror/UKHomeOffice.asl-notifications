@@ -25,6 +25,13 @@ module.exports = {
 
   pilAmendmentAsru: require('./pil/pil-amendment-asru'),
 
+  // Traing PIL tasks
+  trainingPilSubmitted: require('./training-pil/training-pil-submitted'),
+  trainingPilEndorsed: require('./training-pil/training-pil-endorsed'),
+  trainingPilReturned: require('./training-pil/training-pil-returned'),
+  trainingPilRejected: require('./training-pil/training-pil-rejected'),
+  trainingPilGranted: require('./training-pil/training-pil-granted'),
+
   // Project tasks
   projectApplicationSubmitted: require('./project/project-application-submitted'),
   projectApplicationEndorsed: require('./project/project-application-endorsed'),
