@@ -13,7 +13,11 @@ const {
   research101Admin2,
   research101AdminUnsubscribed,
   collaborator,
-  collaboratorUnsubscribed
+  collaboratorUnsubscribed,
+  trainingOwner,
+  trainingNtco,
+  trainingAdmin,
+  trainingLicenceHolder
 } = require('../helpers/users');
 
 module.exports = models => {
@@ -40,6 +44,11 @@ module.exports = models => {
         {
           id: 123,
           name: 'AA est',
+          status: 'active'
+        },
+        {
+          id: 54321,
+          name: 'Training Establishment',
           status: 'active'
         }
       ]);
@@ -307,6 +316,68 @@ module.exports = models => {
             {
               id: 8201,
               role: 'basic'
+            }
+          ]
+        },
+        {
+          id: trainingLicenceHolder,
+          title: 'Mr',
+          firstName: 'Peter',
+          lastName: 'Parker',
+          dob: '2000-01-01',
+          email: 'p.parker@example.com',
+          establishments: [
+            {
+              id: 54321,
+              role: 'basic'
+            }
+          ]
+        },
+        {
+          id: trainingOwner,
+          title: 'Mr',
+          firstName: 'Training',
+          lastName: 'Course-owner',
+          dob: '1970-10-27',
+          email: 't.course@example.com',
+          establishments: [
+            {
+              id: 54321,
+              role: 'basic'
+            }
+          ]
+        },
+        {
+          id: trainingNtco,
+          title: 'Mr',
+          firstName: 'Training',
+          lastName: 'Compliance',
+          dob: '1962-07-19',
+          email: 't.ntco@example.com',
+          establishments: [
+            {
+              id: 54321,
+              role: 'basic'
+            }
+          ],
+          roles: [
+            {
+              establishmentId: 54321,
+              type: 'ntco'
+            }
+          ]
+        },
+        {
+          id: trainingAdmin,
+          title: 'Mr',
+          firstName: 'Training',
+          lastName: 'Admin',
+          dob: '1972-07-11',
+          email: 't.admin@example.com',
+          establishments: [
+            {
+              id: 54321,
+              role: 'admin'
             }
           ]
         }
