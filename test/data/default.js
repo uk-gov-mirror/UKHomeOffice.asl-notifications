@@ -13,6 +13,7 @@ const {
   research101Admin2,
   research101AdminUnsubscribed,
   collaborator,
+  collaboratorUnaffiliated,
   collaboratorUnsubscribed,
   trainingOwner,
   trainingNtco,
@@ -299,6 +300,15 @@ module.exports = models => {
               role: 'basic'
             }
           ]
+        },
+        {
+          id: collaboratorUnaffiliated,
+          title: 'Ms',
+          firstName: 'ExCollab',
+          lastName: 'Orator',
+          dob: '1970-10-27',
+          email: 'excollab.orator@example.com',
+          establishments: []
         },
         {
           id: collaboratorUnsubscribed,

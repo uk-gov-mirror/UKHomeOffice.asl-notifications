@@ -11,6 +11,7 @@ module.exports = {
   research101Admin2: 'e7b205cf-1acf-4eb3-bcde-ab63c21d0551',
   research101AdminUnsubscribed: '7371e6c5-1836-40bd-98c2-ce05193539ed',
   collaborator: 'c1bf9c86-fed7-4ea7-949c-e99ffeed717b',
+  collaboratorUnaffiliated: 'fb59edef-de93-4cdc-a15f-74f9003dcc51',
   collaboratorUnsubscribed: '5902a1d5-1635-4ccd-b9c8-db4d20aac847',
   trainingLicenceHolder: '0c130d97-35f1-455f-b7db-a16ca0a7a2ea',
   trainingOwner: '084457d6-0f38-43dd-b133-70858ff4b3de',
