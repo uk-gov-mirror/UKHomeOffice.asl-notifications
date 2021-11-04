@@ -2,7 +2,15 @@ const assert = require('assert');
 const dbHelper = require('../../../helpers/db');
 const logger = require('../../../helpers/logger');
 const Recipients = require('../../../../lib/recipients');
-const { basic, croydonAdmin1, croydonAdmin2, croydonAdminUnsubscribed, collaborator, collaboratorUnsubscribed } = require('../../../helpers/users');
+const {
+  basic,
+  croydonAdmin1,
+  croydonAdmin2,
+  croydonAdminUnsubscribed,
+  collaborator,
+  collaboratorUnaffiliated,
+  collaboratorUnsubscribed
+} = require('../../../helpers/users');
 
 const {
   projectApplicationSubmitted,
@@ -164,6 +172,13 @@ describe('Project applications', () => {
           assert(recipients.get(collaborator).emailTemplate === 'licence-granted', 'email type is licence-granted');
           assert(recipients.get(collaborator).applicant.id === basic, 'basic user is the applicant');
           assert(!recipients.has(collaboratorUnsubscribed), 'collaboratorUnsubscribed is not in the recipients list');
+        });
+    });
+
+    it('does not notify collaborators if they have been removed from an establishment', () => {
+      return this.recipientBuilder.getNotifications(projectApplicationGranted)
+        .then(recipients => {
+          assert(!recipients.has(collaboratorUnaffiliated), 'collaboratorUnaffiliated should not be in the recipients list');
         });
     });
 
