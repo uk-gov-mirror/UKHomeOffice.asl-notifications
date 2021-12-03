@@ -383,6 +383,29 @@ describe('Project expiry', () => {
         });
     });
 
+    it('includes continuation deadline in expiry warning', () => {
+      const project = {
+        id: uuid(),
+        licenceHolderId: basic,
+        expiryDate: moment().add(1, 'year').subtract(1, 'day').toISOString(),
+        status: 'active',
+        establishmentId: 8201,
+        licenceNumber: 'XYZ12345'
+      };
+      const continuationDate = moment(project.expiryDate).subtract(3, 'months').format('D MMM YYYY');
+
+      return Promise.resolve()
+        .then(() => this.schema.Project.query().insert(project))
+        .then(() => this.schema.ProjectEstablishment.query().insert({ projectId: project.id, establishmentId: 123, status: 'active' }))
+        .then(() => expiryNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          notifications.forEach(notification => {
+            assert.ok(notification.html.includes(`For new licences to be granted in time to allow for a transfer of animals, you must submit your application no later than ${continuationDate}`));
+          });
+        });
+    });
+
   });
 
 });
