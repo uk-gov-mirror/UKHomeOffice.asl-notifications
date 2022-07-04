@@ -22,7 +22,7 @@ module.exports = async ({ schema, logger, publicUrl }) => {
         break;
 
       case 'month':
-        start = moment().add(1, 'week');
+        start = moment().add(8, 'days');
         end = moment().add(value, 'month');
         break;
     }
@@ -39,6 +39,7 @@ module.exports = async ({ schema, logger, publicUrl }) => {
       data: {
         id: reminder.modelId,
         model: reminder.modelType,
+        establishmentId: reminder.establishmentId,
         when,
         action,
         reminder
