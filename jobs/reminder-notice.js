@@ -25,6 +25,11 @@ module.exports = async ({ schema, logger, publicUrl }) => {
         start = moment().add(8, 'days');
         end = moment().add(value, 'month');
         break;
+
+      case 'overdue':
+        start = moment().subtract(1, 'day');
+        end = moment().subtract(1, 'day');
+        break;
     }
 
     const reminders = await Reminder.query()
@@ -50,4 +55,5 @@ module.exports = async ({ schema, logger, publicUrl }) => {
   await reminderNotice({ value: 1, unit: 'month' });
   await reminderNotice({ value: 1, unit: 'week' });
   await reminderNotice({ unit: 'today' });
+  await reminderNotice({ unit: 'overdue' });
 };

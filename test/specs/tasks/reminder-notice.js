@@ -39,7 +39,7 @@ describe('Condition reminder notice', () => {
   });
 
   after(() => {
-    return this.schema.destroy();
+    // return this.schema.destroy();
   });
 
   describe('Establishment condition reminders', () => {
@@ -116,6 +116,30 @@ describe('Condition reminder notice', () => {
         });
     });
 
+    it('adds enforcement team notifications for deadlines that are overdue', () => {
+      const reminder = {
+        modelType: 'establishment',
+        establishmentId: 8201,
+        deadline: moment().subtract(1, 'day').format('YYYY-MM-DD'),
+        status: 'active'
+      };
+
+      return Promise.resolve()
+        .then(() => this.schema.Reminder.query().insert(reminder))
+        .then(() => reminderNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          const expectedSubject = 'Notification: establishment licence XCC09J64D has a condition that was due yesterday';
+          const expected = ['ASRUEnforcement@homeoffice.gov.uk'];
+
+          assert.equal(notifications.length, expected.length);
+          assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
+          notifications.forEach(notification => {
+            assert.equal(notification.subject, expectedSubject);
+          });
+        });
+    });
+
   });
 
   describe('PIL condition reminders', () => {
@@ -135,7 +159,7 @@ describe('Condition reminder notice', () => {
         .then(() => this.schema.Notification.query())
         .then(notifications => {
           const expectedSubject = 'Reminder: personal licence PIL-12345 has a condition that is due in 1 month';
-          const expected = ['basic.user@example.com', 'ntco@example.com'];
+          const expected = ['basic.user@example.com', 'ntco@example.com', 'vice-chancellor@example.com', 'croydon.admin@example.com'];
 
           assert.equal(notifications.length, expected.length);
           assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
@@ -160,7 +184,7 @@ describe('Condition reminder notice', () => {
         .then(() => this.schema.Notification.query())
         .then(notifications => {
           const expectedSubject = 'Reminder: personal licence PIL-12345 has a condition that is due in 1 week';
-          const expected = ['basic.user@example.com', 'ntco@example.com'];
+          const expected = ['basic.user@example.com', 'ntco@example.com', 'vice-chancellor@example.com', 'croydon.admin@example.com'];
 
           assert.equal(notifications.length, expected.length);
           assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
@@ -185,7 +209,32 @@ describe('Condition reminder notice', () => {
         .then(() => this.schema.Notification.query())
         .then(notifications => {
           const expectedSubject = 'Reminder: personal licence PIL-12345 has a condition that is due today';
-          const expected = ['basic.user@example.com', 'ntco@example.com'];
+          const expected = ['basic.user@example.com', 'ntco@example.com', 'vice-chancellor@example.com', 'croydon.admin@example.com'];
+
+          assert.equal(notifications.length, expected.length);
+          assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
+          notifications.forEach(notification => {
+            assert.equal(notification.subject, expectedSubject);
+          });
+        });
+    });
+
+    it('adds enforcement team notifications for deadlines that are overdue', () => {
+      const reminder = {
+        modelType: 'pil',
+        modelId: pilId,
+        establishmentId: 8201,
+        deadline: moment().subtract(1, 'day').format('YYYY-MM-DD'),
+        status: 'active'
+      };
+
+      return Promise.resolve()
+        .then(() => this.schema.Reminder.query().insert(reminder))
+        .then(() => reminderNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          const expectedSubject = 'Notification: personal licence PIL-12345 has a condition that was due yesterday';
+          const expected = ['ASRUEnforcement@homeoffice.gov.uk'];
 
           assert.equal(notifications.length, expected.length);
           assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
@@ -283,6 +332,31 @@ describe('Condition reminder notice', () => {
         .then(notifications => {
           const expectedSubject = 'Reminder: project licence XYZ-12345 has a condition that is due today';
           const expected = ['basic.user@example.com', 'croydon.admin@example.com', 'vice-chancellor@example.com'];
+
+          assert.equal(notifications.length, expected.length);
+          assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
+          notifications.forEach(notification => {
+            assert.equal(notification.subject, expectedSubject);
+          });
+        });
+    });
+
+    it('adds enforcement team notifications for deadlines that are overdue', () => {
+      const reminder = {
+        modelType: 'project',
+        modelId: projectId,
+        establishmentId: 8201,
+        deadline: moment().subtract(1, 'day').format('YYYY-MM-DD'),
+        status: 'active'
+      };
+
+      return Promise.resolve()
+        .then(() => this.schema.Reminder.query().insert(reminder))
+        .then(() => reminderNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          const expectedSubject = 'Notification: project licence XYZ-12345 has a condition that was due yesterday';
+          const expected = ['ASRUEnforcement@homeoffice.gov.uk'];
 
           assert.equal(notifications.length, expected.length);
           assert.deepEqual(notifications.map(n => n.to).sort(), expected.sort());
