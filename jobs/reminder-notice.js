@@ -12,30 +12,29 @@ module.exports = async ({ schema, logger, publicUrl }) => {
 
     logger.debug(`Looking for reminders due ${when}`);
 
-    let start = moment();
-    let end = moment();
+    const query = Reminder.query().where('status', 'active');
 
     switch (unit) {
+      case 'overdue':
+        query.where('deadline', '=', moment().subtract(1, 'day').format('YYYY-MM-DD'));
+        break;
+
+      case 'today':
+        query.where('deadline', '=', moment().format('YYYY-MM-DD'));
+        break;
+
       case 'week':
-        start = moment().add(1, 'day');
-        end = moment().add(value, 'week');
+        query.where('deadline', '>', moment().format('YYYY-MM-DD'))
+          .where('deadline', '<=', moment().add(value, 'week').format('YYYY-MM-DD'));
         break;
 
       case 'month':
-        start = moment().add(8, 'days');
-        end = moment().add(value, 'month');
-        break;
-
-      case 'overdue':
-        start = moment().subtract(1, 'day');
-        end = moment().subtract(1, 'day');
+        query.where('deadline', '>', moment().add(1, 'week').format('YYYY-MM-DD'))
+          .where('deadline', '<=', moment().add(value, 'month').format('YYYY-MM-DD'));
         break;
     }
 
-    const reminders = await Reminder.query()
-      .where('deadline', '>', start.startOf('day').toISOString())
-      .where('deadline', '<=', end.endOf('day').toISOString())
-      .where('status', 'active');
+    const reminders = await query;
 
     logger.debug(`Found ${reminders.length} reminders due`);
 
