@@ -28,7 +28,7 @@ describe('Project applications', () => {
   });
 
   beforeEach(() => {
-    return dbHelper.reset()
+    return dbHelper.reset(this.schema)
       .then(() => dbHelper.loadFixtures(this.schema))
       .then(() => {
         return this.schema.Project.query().insert({

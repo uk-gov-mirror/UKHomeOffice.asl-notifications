@@ -29,7 +29,7 @@ describe('PIL transfers', () => {
   });
 
   beforeEach(() => {
-    return dbHelper.reset()
+    return dbHelper.reset(this.schema)
       .then(() => dbHelper.loadFixtures(this.schema));
   });
 

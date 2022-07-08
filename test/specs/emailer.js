@@ -15,7 +15,7 @@ describe('Emailer', () => {
   });
 
   beforeEach(() => {
-    return dbHelper.reset()
+    return dbHelper.reset(this.schema)
       .then(() => dbHelper.loadFixtures(this.schema))
       .then(() => this.schema.Project.query().insert({
         id: '44ca3d4b-dedf-43e1-a6b7-12eb3cfb249b',

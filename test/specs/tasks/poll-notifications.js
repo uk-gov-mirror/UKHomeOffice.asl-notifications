@@ -15,7 +15,7 @@ describe('Poll notifications', () => {
 
   beforeEach(() => {
     this.sendEmail = sinon.stub();
-    return dbHelper.reset()
+    return dbHelper.reset(this.schema)
       .then(() => dbHelper.loadFixtures(this.schema));
   });
 

@@ -1,6 +1,7 @@
-const knex = require('knex');
 const Schema = require('@asl/schema');
 const fixtures = require('../data');
+
+const snakeCase = str => str.replace(/[A-Z]/g, s => `_${s.toLowerCase()}`);
 
 const dbConfig = {
   client: 'postgres',
@@ -15,28 +16,14 @@ const dbConfig = {
 module.exports = {
   init: () => Schema(dbConfig.connection),
 
-  reset: () => {
-    const db = knex(dbConfig);
-
-    return Promise.resolve()
-      .then(() => {
-        // get the names of all tables in the db
-        return db.select('table_name')
-          .from('information_schema.tables')
-          .whereRaw('table_schema = current_schema()')
-          .where('table_catalog', db.client.database());
-      })
-      .then(results => {
-        // remove the knex migration tables from the list
-        return results.map(r => r.table_name).filter(tableName => !tableName.includes('knex_'));
-      })
-      .then(aslTables => {
-        // truncate the remaining tables
-        return aslTables.reduce((p, table) => {
-          return p.then(() => db.raw(`TRUNCATE TABLE ${table} CASCADE`));
-        }, Promise.resolve());
-      })
-      .then(() => db.destroy());
+  reset: schema => {
+    return Object.keys(schema).reduce((p, table) => {
+      return p.then(() => {
+        if (schema[table].tableName) {
+          return schema[table].knex().raw(`truncate ${snakeCase(schema[table].tableName)} cascade;`);
+        }
+      });
+    }, Promise.resolve());
   },
 
   loadFixtures: schema => {

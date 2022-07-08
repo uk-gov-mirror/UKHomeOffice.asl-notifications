@@ -17,7 +17,7 @@ describe('Project revocations', () => {
   });
 
   beforeEach(() => {
-    return dbHelper.reset()
+    return dbHelper.reset(this.schema)
       .then(() => dbHelper.loadFixtures(this.schema))
       .then(() => {
         return this.schema.Project.query().insert(projectRevocation.data.modelData);

@@ -20,7 +20,7 @@ describe('Condition reminder notice', () => {
   beforeEach(() => {
     this.sendEmail = sinon.stub();
 
-    return dbHelper.reset()
+    return dbHelper.reset(this.schema)
       .then(() => dbHelper.loadFixtures(this.schema))
       .then(() => this.schema.PIL.query().insert({
         id: pilId,
