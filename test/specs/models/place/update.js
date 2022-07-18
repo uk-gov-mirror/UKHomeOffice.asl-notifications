@@ -24,7 +24,7 @@ describe('Place update (Establishment amendment)', () => {
   });
 
   beforeEach(() => {
-    return dbHelper.reset()
+    return dbHelper.reset(this.schema)
       .then(() => dbHelper.loadFixtures(this.schema));
   });
 

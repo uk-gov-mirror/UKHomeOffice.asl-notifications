@@ -30,6 +30,7 @@ module.exports = models => {
         {
           id: 8201,
           name: 'University of Croydon',
+          licenceNumber: 'XCC09J64D',
           status: 'active'
         },
         {

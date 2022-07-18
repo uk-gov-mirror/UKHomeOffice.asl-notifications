@@ -17,7 +17,7 @@ describe('Project transfer', () => {
   });
 
   beforeEach(() => {
-    return dbHelper.reset()
+    return dbHelper.reset(this.schema)
       .then(() => dbHelper.loadFixtures(this.schema))
       .then(() => {
         return this.schema.Project.query().insert(projectTransferSubmitted.data.modelData);
