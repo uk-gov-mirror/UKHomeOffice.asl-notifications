@@ -11,6 +11,7 @@ const jobs = [
 ];
 
 module.exports = async (params) => {
+  let hasFailure = false;
   for (const job of jobs) {
     params.logger.debug(`Executing job ${job}`);
     await Promise.resolve()
@@ -19,6 +20,10 @@ module.exports = async (params) => {
       .catch(e => {
         params.logger.error({ message: e.message, stack: e.stack, ...e });
         statsd.increment('asl.job.error', 1);
+        hasFailure = true;
       });
+  }
+  if (hasFailure) {
+    process.exit(1);
   }
 };
