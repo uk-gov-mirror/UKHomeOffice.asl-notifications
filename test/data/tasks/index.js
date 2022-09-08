@@ -10,6 +10,9 @@ module.exports = {
   pelAmendmentGranted: require('./place/pel-amendment-granted'),
   pelAmendmentRejected: require('./place/pel-amendment-rejected'),
 
+  pelSuspended: require('./establishment/pel-suspended'),
+  pelReinstated: require('./establishment/pel-reinstated'),
+
   // PIL tasks
   pilApplicationSubmitted: require('./pil/pil-application-submitted'),
   pilApplicationEndorsed: require('./pil/pil-application-endorsed'),
@@ -24,6 +27,9 @@ module.exports = {
   pilTransferRejected: require('./pil/pil-transfer-rejected'),
 
   pilAmendmentAsru: require('./pil/pil-amendment-asru'),
+
+  pilSuspended: require('./pil/pil-suspended'),
+  pilReinstated: require('./pil/pil-reinstated'),
 
   // Traing PIL tasks
   trainingPilSubmitted: require('./training-pil/training-pil-submitted'),
@@ -41,6 +47,8 @@ module.exports = {
   projectRevocation: require('./project/project-revocation'),
   projectTransferSubmitted: require('./project/project-transfer-submitted'),
   projectTransferGranted: require('./project/project-transfer-granted'),
+  projectSuspended: require('./project/project-suspended'),
+  projectReinstated: require('./project/project-reinstated'),
 
   // Profile tasks
   profileAmendmentAutoresolved: require('./profile/profile-amendment-autoresolved'),

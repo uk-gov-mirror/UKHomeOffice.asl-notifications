@@ -6,6 +6,10 @@ const {
   croydonAdmin2,
   croydonAdminUnsubscribed,
   croydonNtco,
+  croydonPilHolder1,
+  croydonPilHolder2,
+  croydonProjectHolder1,
+  croydonProjectHolder2,
   marvellAdmin,
   marvellAdminUnsubscribed,
   marvellNtco,
@@ -163,6 +167,62 @@ module.exports = models => {
             {
               establishmentId: 8201,
               type: 'ntco'
+            }
+          ]
+        },
+        {
+          id: croydonPilHolder1,
+          title: 'Mr',
+          firstName: 'Hasa',
+          lastName: 'Pil',
+          dob: '1970-10-27',
+          email: 'hasa.pil@example.com',
+          establishments: [
+            {
+              id: 8201,
+              role: 'basic'
+            }
+          ]
+        },
+        {
+          id: croydonPilHolder2,
+          title: 'Mr',
+          firstName: 'Anada',
+          lastName: 'Pil',
+          dob: '1970-10-27',
+          email: 'anada.pil@example.com',
+          establishments: [
+            {
+              id: 8201,
+              role: 'basic'
+            }
+          ]
+        },
+        {
+          id: croydonProjectHolder1,
+          title: 'Mr',
+          firstName: 'Hasa',
+          lastName: 'Project',
+          dob: '1970-10-27',
+          email: 'hasa.project@example.com',
+          establishments: [
+            {
+              id: 8201,
+              role: 'basic'
+            }
+          ]
+        },
+        {
+          id: croydonProjectHolder2,
+          title: 'Mr',
+          firstName: 'Anada',
+          lastName: 'Project',
+          dob: '1970-10-27',
+          email: 'anada.project@example.com',
+          establishments: [
+            {
+              id: 8201,
+              role: 'basic'
             }
           ]
         },
