@@ -38,9 +38,9 @@ module.exports = {
       changedBy: 'a942ffc7-e7ca-4d76-a001-0b5048a057d1'
     }
   },
-  event: 'update',
+  event: 'status:new:resolved',
+  status: 'resolved',
   comment: 'Failures at the top.',
-  status: 'new',
   data: {
     id: 8201,
     data: {},

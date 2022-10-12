@@ -47,9 +47,9 @@ module.exports = {
       changedBy: 'a942ffc7-e7ca-4d76-a001-0b5048a057d1'
     }
   },
-  event: 'update',
+  event: 'status:new:resolved',
+  status: 'resolved',
   comment: 'Now complying.',
-  status: 'new',
   data: {
     id: pilId,
     data: {
