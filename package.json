@@ -29,7 +29,7 @@
     "eslint-config-lennym": "^2.0.1",
     "eslint-plugin-undocumented-env": "^1.0.0",
     "knex": "^0.21.21",
-    "mocha": "^6.2.2",
+    "mocha": "^10.1.0",
     "nodemon": "^2.0.4",
     "pg": "^8.7.3"
   },
