@@ -9,6 +9,7 @@
     "test:lint": "eslint .",
     "pretest:unit": "NODE_ENV=test npm run migrate",
     "test:unit": "NODE_ENV=test mocha ./test --recursive --exit --timeout 5000",
+    "test:audit": "audit-ci --high --skip-dev --config .auditrc.json",
     "migrate": "DATABASE_NAME=asl-test knex migrate:latest --knexfile ./node_modules/@asl/schema/knexfile.js",
     "job": "node ./jobs/run-job"
   },
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/UKHomeOffice/asl-notifications#readme",
   "devDependencies": {
+    "audit-ci": "^6.5.0",
     "dotenv": "^6.2.0",
     "eslint": "^5.16.0",
     "eslint-config-lennym": "^2.0.1",
