@@ -15,8 +15,8 @@ module.exports = async ({ schema, logger, publicUrl }) => {
           .as('with_deadline')
           .toKnexQuery())
       .whereBetween('with_deadline.rops_deadline', [deadline.startOf('day').toISOString(), deadline.endOf('day').toISOString()])
-      .andWhere(b => b.whereNull('with_deadline.expiry_date').orWhere('with_deadline.expiry_date', '>', `${year}-01-01`))
-      .andWhere(b => b.whereNull('with_deadline.revocation_date').orWhere('with_deadline.revocation_date', '>', `${year}-01-01`));
+      .andWhere(queryBuilder => queryBuilder.whereNull('with_deadline.expiry_date').orWhere('with_deadline.expiry_date', '>', `${year}-01-01`))
+      .andWhere(queryBuilder => queryBuilder.whereNull('with_deadline.revocation_date').orWhere('with_deadline.revocation_date', '>', `${year}-01-01`));
   };
 
   const emailer = Emailer({ schema, logger, publicUrl });
