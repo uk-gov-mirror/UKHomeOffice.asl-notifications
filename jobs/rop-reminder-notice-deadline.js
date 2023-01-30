@@ -1,16 +1,12 @@
 const moment = require('moment');
 const Emailer = require('../lib/emailer');
+const { uniqBy } = require('lodash');
 
 module.exports = async ({ schema, logger, publicUrl }) => {
   const { Project, knex } = schema;
 
-  const emailer = Emailer({ schema, logger, publicUrl });
-
-  const reminderNotice = async ({ deadline = null, actionSuffix, when }) => {
-    const year = moment().utc().year();
-    const action = `rop-reminder-${actionSuffix}`;
-
-    const query = knex.queryBuilder().select('with_deadline.*')
+  const projectsWithRopsOutstanding = (deadline, year) => {
+    return knex.queryBuilder().select('with_deadline.*')
       .from(
         Project.query()
           .select('projects.*')
@@ -18,13 +14,26 @@ module.exports = async ({ schema, logger, publicUrl }) => {
           .whereRopsOutstanding(year)
           .as('with_deadline')
           .toKnexQuery())
-      .whereBetween('with_deadline.rops_deadline', [deadline.startOf('day').toISOString(), deadline.endOf('day').toISOString()]);
+      .whereBetween('with_deadline.rops_deadline', [deadline.startOf('day').toISOString(), deadline.endOf('day').toISOString()])
+      .andWhere(b => b.whereNull('with_deadline.expiry_date').orWhere('with_deadline.expiry_date', '>', `${year}-01-01`))
+      .andWhere(b => b.whereNull('with_deadline.revocation_date').orWhere('with_deadline.revocation_date', '>', `${year}-01-01`));
+  };
 
-    logger.debug(`Finding projects with ROP due ${when}`);
+  const emailer = Emailer({ schema, logger, publicUrl });
 
-    const projects = await query;
+  const reminderNotice = async ({ deadline = null, actionSuffix, when }) => {
+    const year = moment().utc().year();
+    const action = `rop-reminder-${actionSuffix}`;
 
-    logger.debug(`Found ${projects.length} projects with ROPs due`);
+    const thisYearProjects = await projectsWithRopsOutstanding(deadline, year);
+
+    logger.debug(`Found ${thisYearProjects.length} projects with ROPs due`);
+
+    const lastYearProjects = await projectsWithRopsOutstanding(deadline, year - 1);
+
+    logger.debug(`Found ${lastYearProjects.length} projects with ROPs due from last year`);
+
+    const projects = uniqBy([...lastYearProjects, ...thisYearProjects], project => project.id);
 
     return Promise.all(projects.map(project => emailer({
       event: 'direct-notification',

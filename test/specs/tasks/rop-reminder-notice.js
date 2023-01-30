@@ -7,6 +7,7 @@ const logger = require('../../helpers/logger');
 const ropReminderNotice = require('../../../jobs/rop-reminder-notice-deadline');
 const ropReminderActive = require('../../../jobs/rop-reminder-notice-active');
 const { basic } = require('../../helpers/users');
+const Mockdate = require('mockdate');
 
 const publicUrl = 'http://localhost:8080';
 const projectId = uuid();
@@ -21,6 +22,10 @@ describe('ROP reminder notice', () => {
 
     return dbHelper.reset(this.schema)
       .then(() => dbHelper.loadFixtures(this.schema));
+  });
+
+  afterEach(() => {
+    Mockdate.reset();
   });
 
   after(() => {
@@ -100,6 +105,7 @@ describe('ROP reminder notice', () => {
 
   describe('ROP reminder notice for daily job', () => {
     it('does not add notifications for submitted ROPs', () => {
+      Mockdate.set('2022-11-25 20:20:21');
       const rop = {
         id: uuid(),
         projectId: projectId,
@@ -146,6 +152,7 @@ describe('ROP reminder notice', () => {
     });
 
     it('adds notifications for ROPs due today', () => {
+      Mockdate.set('2022-07-25 19:20:21');
       return Promise.resolve()
         .then(() => aProject({ expiryDate: moment().utc().subtract(28, 'days') }))
         .then(() => ropReminderNotice({ schema: this.schema, logger, publicUrl }))
@@ -159,6 +166,7 @@ describe('ROP reminder notice', () => {
     });
 
     it('adds notifications for expired project ROPs due today', () => {
+      Mockdate.set('2022-12-22 19:20:21');
       return Promise.resolve()
         .then(() => aProject({ status: 'expired', expiryDate: moment().utc().subtract(28, 'days') }))
         .then(() => ropReminderNotice({ schema: this.schema, logger, publicUrl }))
@@ -168,10 +176,12 @@ describe('ROP reminder notice', () => {
           const expectedRecipients = ['basic.user@example.com'];
 
           assertNotifications(notifications, expectedRecipients, expectedSubject);
+          assert(notifications[0].html.includes('Deadline for submission: 22 Dec 2022'));
         });
     });
 
     it('adds notifications for revoked project ROPs due today', () => {
+      Mockdate.set('2022-11-25 13:20:21');
       return Promise.resolve()
         .then(() => aProject({ status: 'revoked', revocationDate: moment().utc().subtract(28, 'days') }))
         .then(() => ropReminderNotice({ schema: this.schema, logger, publicUrl }))
@@ -181,6 +191,59 @@ describe('ROP reminder notice', () => {
           const expectedRecipients = ['basic.user@example.com'];
 
           assertNotifications(notifications, expectedRecipients, expectedSubject);
+          assert(notifications[0].html.includes('Deadline for submission: 25 Nov 2022'));
+        });
+    });
+
+    it('adds a notification for project revoked last year with rop not yet submitted', () => {
+      Mockdate.set('2023-01-23 11:20:21');
+
+      return Promise.resolve()
+        .then(() => aProject({ id: '11111111-58e1-4e1f-831b-1b807fb30767', status: 'revoked', revocationDate: moment('2022-12-26 14:50:00') }))
+        .then(() => ropReminderNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          const expectedSubject = 'Reminder: Return of procedures due today for revoked project licence XYZ-12345';
+          const expectedRecipients = ['basic.user@example.com'];
+
+          assertNotifications(notifications, expectedRecipients, expectedSubject);
+          assert(notifications[0].html.includes('Deadline for submission: 23 Jan 2023'));
+        });
+    });
+
+    it('adds a notification for project revoked at start of year with rop not yet submitted', () => {
+      Mockdate.set('2023-01-31 11:20:21');
+
+      return Promise.resolve()
+        .then(() => aProject({ id: projectId, status: 'revoked', revocationDate: moment('2023-01-03 14:50:00') }))
+        .then(() => ropReminderNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          const expectedSubject = 'Reminder: Return of procedures due today for revoked project licence XYZ-12345';
+          const expectedRecipients = ['basic.user@example.com'];
+
+          assertNotifications(notifications, expectedRecipients, expectedSubject);
+          assert(notifications[0].html.includes('Deadline for submission: 31 Jan 2023'));
+        });
+    });
+
+    it('does not add a notification for project revoked last year with rop submitted', () => {
+      Mockdate.set('2023-01-23 11:20:21');
+
+      const rop = {
+        id: uuid(),
+        projectId: projectId,
+        status: 'submitted',
+        year: 2022
+      };
+
+      return Promise.resolve()
+        .then(() => aProject({ id: projectId, status: 'revoked', revocationDate: moment('2022-12-26 14:50:00') }))
+        .then(() => this.schema.Rop.query().insert(rop))
+        .then(() => ropReminderNotice({ schema: this.schema, logger, publicUrl }))
+        .then(() => this.schema.Notification.query())
+        .then(notifications => {
+          assert.deepEqual(notifications, []);
         });
     });
   });
