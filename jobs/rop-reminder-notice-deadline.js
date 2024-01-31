@@ -6,7 +6,11 @@ module.exports = async ({ schema, logger, publicUrl }) => {
   const { Project, knex } = schema;
 
   const projectsWithRopsOutstanding = (deadline, year) => {
-    return knex.queryBuilder().select('with_deadline.*')
+    return knex.queryBuilder().select(
+      'with_deadline.id',
+      'with_deadline.rops_deadline',
+      'with_deadline.establishment_id'
+    )
       .from(
         Project.query()
           .select('projects.*')
@@ -43,7 +47,6 @@ module.exports = async ({ schema, logger, publicUrl }) => {
         establishmentId: project.establishmentId,
         action,
         when,
-        project,
         ropsDeadline: project.ropsDeadline
       }
     })));

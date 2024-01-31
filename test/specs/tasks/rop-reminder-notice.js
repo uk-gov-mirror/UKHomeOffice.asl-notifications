@@ -133,7 +133,10 @@ describe('ROP reminder notice', () => {
           const expectedSubject = 'Reminder: Return of procedures due in 1 week for project licence XYZ-12345';
           const expectedRecipients = ['basic.user@example.com'];
 
-          assertNotifications(notifications, expectedRecipients, expectedSubject);
+          // Filter out messages for today as on 31st Jan the today message is also triggered
+          const normalisedNotifications = notifications.filter(n => n.subject !== 'Reminder: Return of procedures due today for project licence XYZ-12345');
+
+          assertNotifications(normalisedNotifications, expectedRecipients, expectedSubject);
         });
     });
 
@@ -147,7 +150,10 @@ describe('ROP reminder notice', () => {
           const expectedSubject = 'Reminder: Return of procedures due in 1 week for expired project licence XYZ-12345';
           const expectedRecipients = ['basic.user@example.com'];
 
-          assertNotifications(notifications, expectedRecipients, expectedSubject);
+          // Filter out messages for today as on 31st Jan the today message is also triggered
+          const normalisedNotifications = notifications.filter(n => n.subject !== 'Reminder: Return of procedures due today for expired project licence XYZ-12345');
+
+          assertNotifications(normalisedNotifications, expectedRecipients, expectedSubject);
         });
     });
 
