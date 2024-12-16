@@ -11,8 +11,8 @@ const publicUrl = 'http://localhost:8080';
 
 describe('Project expiry', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
   });
 
   beforeEach(() => {
@@ -21,8 +21,8 @@ describe('Project expiry', () => {
       .then(() => dbHelper.loadFixtures(this.schema));
   });
 
-  after(() => {
-    return this.schema.destroy();
+  after(async () => {
+    await this.schema.destroy();
   });
 
   it('adds 12 month notification for a project due to expire in 12 months', () => {

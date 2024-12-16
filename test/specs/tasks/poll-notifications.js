@@ -9,8 +9,8 @@ const { basic } = require('../../helpers/users');
 
 describe('Poll notifications', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
   });
 
   beforeEach(() => {

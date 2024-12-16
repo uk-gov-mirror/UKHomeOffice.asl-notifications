@@ -16,8 +16,8 @@ const { pelSuspended, pelReinstated } = require('../../../data/tasks');
 
 describe('PEL', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
     this.recipientBuilder = Recipients({ schema: this.schema, logger });
   });
 

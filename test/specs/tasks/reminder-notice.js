@@ -13,8 +13,8 @@ const pilId = uuid();
 
 describe('Condition reminder notice', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
   });
 
   beforeEach(() => {

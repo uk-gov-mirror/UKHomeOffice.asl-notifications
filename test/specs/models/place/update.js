@@ -18,8 +18,8 @@ const makeUpdate = task => {
 
 describe('Place update (Establishment amendment)', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
     this.recipientBuilder = Recipients({ schema: this.schema, logger });
   });
 

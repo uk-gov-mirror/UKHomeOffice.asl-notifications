@@ -13,8 +13,8 @@ const publicUrl = 'http://localhost:8080';
 const projectId = uuid();
 
 describe('ROP reminder notice', () => {
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
   });
 
   beforeEach(() => {

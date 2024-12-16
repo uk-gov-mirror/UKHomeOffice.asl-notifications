@@ -15,8 +15,8 @@ const { pilSuspended, pilReinstated } = require('../../../data/tasks');
 
 describe('PIL', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
     this.recipientBuilder = Recipients({ schema: this.schema, logger });
   });
 

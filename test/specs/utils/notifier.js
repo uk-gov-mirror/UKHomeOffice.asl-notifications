@@ -7,8 +7,8 @@ const { basic, croydonAdmin1 } = require('../../helpers/users');
 
 describe('Notifier', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
     this.notifier = Notifier({ schema: this.schema, logger });
   });
 

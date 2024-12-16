@@ -11,8 +11,8 @@ const publicUrl = 'http://localhost:8080';
 
 describe('Retrospective assessment due', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
   });
 
   beforeEach(() => {

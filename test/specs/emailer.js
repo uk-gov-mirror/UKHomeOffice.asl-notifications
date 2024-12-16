@@ -9,8 +9,8 @@ const publicUrl = 'http://localhost:8080';
 
 describe('Emailer', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
     this.emailer = Emailer({ publicUrl, schema: this.schema, logger });
   });
 

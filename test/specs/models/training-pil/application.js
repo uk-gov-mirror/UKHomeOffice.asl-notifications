@@ -14,8 +14,8 @@ const {
 
 describe('Training PIL applications', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
     this.recipientBuilder = Recipients({ schema: this.schema, logger, publicUrl: 'http://localhost' });
   });
 

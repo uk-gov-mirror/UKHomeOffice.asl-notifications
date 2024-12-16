@@ -1,4 +1,4 @@
-const Schema = require('@asl/schema');
+const Schema = require('../../scripts/asl-schema');
 const fixtures = require('../data');
 
 const snakeCase = str => str.replace(/[A-Z]/g, s => `_${s.toLowerCase()}`);

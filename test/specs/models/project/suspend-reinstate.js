@@ -19,8 +19,8 @@ const projectId2 = 'f33c6e04-1a85-46e9-94e7-c7209313fea5';
 
 describe('Project', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
     this.recipientBuilder = Recipients({ schema: this.schema, logger });
   });
 

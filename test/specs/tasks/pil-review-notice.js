@@ -11,8 +11,8 @@ const publicUrl = 'http://localhost:8080';
 
 describe('PIL review', () => {
 
-  before(() => {
-    this.schema = dbHelper.init();
+  before(async () => {
+    this.schema = await dbHelper.init();
   });
 
   beforeEach(() => {
