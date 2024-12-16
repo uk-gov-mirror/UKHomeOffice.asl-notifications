@@ -5,8 +5,8 @@ module.exports = {
     database: process.env.DATABASE_NAME || 'asl',
     host: process.env.DATABASE_HOST || 'localhost',
     user: process.env.DATABASE_USERNAME || 'postgres',
-    password: process.env.DATABASE_PASSWORD,
-    port: process.env.DATABASE_PORT
+    password: process.env.DATABASE_PASSWORD || 'test-password',
+    port: process.env.DATABASE_PORT || 5432
   },
   emailer: {
     host: process.env.EMAILER_SERVICE

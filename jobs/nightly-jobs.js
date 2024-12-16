@@ -23,6 +23,7 @@ module.exports = async (params) => {
       });
   }
   if (hasFailure) {
+    console.error('error: ');
     process.exit(1);
   }
 };
