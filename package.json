@@ -7,8 +7,8 @@
     "dev": "nodemon -r dotenv/config index.js",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint .",
-    "pretest:unit": "NODE_ENV=test npm run migrate",
-    "test:unit": "NODE_ENV=test mocha ./test --recursive --exit --timeout 10000",
+    "pretest:unit": "npm run migrate",
+    "test:unit": "mocha ./test --recursive --exit --timeout 10000",
     "test:audit": "audit-ci --high --skip-dev --config .auditrc.json",
     "migrate": "node scripts/latest-migration.js",
     "job": "node ./jobs/run-job"
