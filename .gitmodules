@@ -1,3 +1,0 @@
-[submodule "packages/asl-permissions"]
-	path = packages/asl-permissions
-	url = https://github.com/UKHomeOffice/asl-permissions.git
